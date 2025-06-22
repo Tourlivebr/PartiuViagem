@@ -1,0 +1,225 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const destinos = (await getCollection('destinos')).sort(
+	(a, b) => (a.data.order || 0) - (b.data.order || 0)
+);
+---
+
+<html lang="pt-BR">
+	<head>
+		<BaseHead title="Destinos - Partiu Viagens" description="Descubra nossos destinos nacionais e internacionais" />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="destinos-page">
+				<div class="container">
+					<h1>Nossos Destinos</h1>
+					<p class="page-description">
+						Explore nossa seleção de destinos incríveis, desde paraísos nacionais até aventuras internacionais.
+					</p>
+					
+					<div class="destinos-grid">
+						{destinos.map((destino) => (
+							<article class="destino-card">
+								<a href={`/destinos/${destino.id}/`} class="card-link">
+									{destino.data.isPromo && (
+										<div class="promo-badge">PROMO</div>
+									)}
+									<div class="card-image">
+										<Image 
+											src={destino.data.featuredImage} 
+											alt={destino.data.title}
+											width={400}
+											height={250}
+											class="card-img"
+										/>
+									</div>
+									<div class="card-content">
+										<div class="rating">
+											<span class="stars">{'★'.repeat(Math.floor(destino.data.rating))}</span>
+											<span class="rating-text">{destino.data.rating} ({destino.data.reviewCount} Reviews)</span>
+										</div>
+										<h2 class="card-title">{destino.data.title}</h2>
+										<div class="location">
+											<span class="location-icon">📍</span>
+											<span class="location-text">{destino.data.location}, {destino.data.country}</span>
+										</div>
+										<p class="card-description">{destino.data.description}</p>
+										<div class="price">
+											{destino.data.currency} {destino.data.price.toLocaleString('pt-BR')}
+										</div>
+									</div>
+								</a>
+							</article>
+						))}
+					</div>
+				</div>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.destinos-page {
+		padding: 8rem 0 4rem 0;
+		min-height: 80vh;
+	}
+
+	.container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 2rem;
+	}
+
+	h1 {
+		font-size: 3rem;
+		font-weight: bold;
+		text-align: center;
+		margin-bottom: 1rem;
+		color: #2c3e50;
+	}
+
+	.page-description {
+		font-size: 1.2rem;
+		text-align: center;
+		max-width: 600px;
+		margin: 0 auto 3rem;
+		color: #5a6c7d;
+		line-height: 1.6;
+	}
+
+	.destinos-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+		gap: 2rem;
+	}
+
+	.destino-card {
+		background: white;
+		border-radius: 16px;
+		overflow: hidden;
+		box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+		transition: all 0.3s ease;
+		position: relative;
+	}
+
+	.destino-card:hover {
+		transform: translateY(-8px);
+		box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+	}
+
+	.card-link {
+		text-decoration: none;
+		color: inherit;
+		display: block;
+	}
+
+	.promo-badge {
+		position: absolute;
+		top: 1rem;
+		left: 1rem;
+		background: #e91e63;
+		color: white;
+		padding: 0.5rem 1rem;
+		border-radius: 20px;
+		font-size: 0.875rem;
+		font-weight: bold;
+		z-index: 2;
+	}
+
+	.card-image {
+		position: relative;
+		height: 250px;
+		overflow: hidden;
+	}
+
+	.card-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.3s ease;
+	}
+
+	.destino-card:hover .card-img {
+		transform: scale(1.05);
+	}
+
+	.card-content {
+		padding: 1.5rem;
+	}
+
+	.rating {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.stars {
+		color: #ffc107;
+		font-size: 1rem;
+	}
+
+	.rating-text {
+		font-size: 0.875rem;
+		color: #6c757d;
+	}
+
+	.card-title {
+		font-size: 1.5rem;
+		font-weight: bold;
+		margin: 0 0 0.75rem 0;
+		color: #2c3e50;
+	}
+
+	.location {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin-bottom: 1rem;
+		color: #6c757d;
+		font-size: 0.95rem;
+	}
+
+	.location-icon {
+		font-size: 1rem;
+	}
+
+	.card-description {
+		color: #6c757d;
+		line-height: 1.5;
+		margin-bottom: 1.5rem;
+	}
+
+	.price {
+		font-size: 1.25rem;
+		font-weight: bold;
+		color: #8e44ad;
+		background: #f8f9fa;
+		padding: 0.75rem 1rem;
+		border-radius: 8px;
+		text-align: center;
+	}
+
+	@media (max-width: 768px) {
+		h1 {
+			font-size: 2.5rem;
+		}
+
+		.destinos-grid {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+		}
+
+		.container {
+			padding: 0 1rem;
+		}
+	}
+</style>
