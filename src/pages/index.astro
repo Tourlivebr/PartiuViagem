@@ -3,7 +3,11 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import Footer from '../components/Footer.astro';
-import DestinosCarousel from '../components/DestinosCarousel.astro';
+import DestinosNacionaisCarousel from '../components/DestinosNacionaisCarousel.astro';
+import DestinosInternacionaisCarousel from '../components/DestinosInternacionaisCarousel.astro';
+import WhyChooseUs from '../components/WhyChooseUs.astro';
+import TestimonialsSection from '../components/TestimonialsSection.astro';
+import NewsletterSection from '../components/NewsletterSection.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 ---
 
@@ -16,7 +20,11 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 		<Header />
 		<main>
 			<Hero />
-			<DestinosCarousel />
+			<WhyChooseUs />
+			<DestinosNacionaisCarousel />
+			<DestinosInternacionaisCarousel />
+			<TestimonialsSection />
+			<NewsletterSection />
 		</main>
 		<Footer />
 	</body>

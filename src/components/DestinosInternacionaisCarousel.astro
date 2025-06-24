@@ -2,23 +2,23 @@
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 
-const destinos = (await getCollection('destinos')).sort(
-	(a, b) => (a.data.order || 0) - (b.data.order || 0)
-);
+const allDestinos = await getCollection('destinos');
+const destinosInternacionais = allDestinos
+	.filter(destino => destino.data.country !== 'BRASIL')
+	.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
 ---
 
 <section class="destinos-section">
 	<div class="container">
-		<h2 class="section-title">Destinos Nacionais e Internacionais</h2>
+		<h2 class="section-title">Destinos Internacionais</h2>
 		<p class="section-description">
-			Com a Partiu Viagens, seja para excursões nacionais ou internacionais, você encontra as melhores
-			programações para seu lazer e aventura. Prepare-se para descobrir novos destinos com conforto e
-			segurança.
+			Explore o mundo com a Partiu Viagens. Descubra culturas fascinantes, paisagens deslumbrantes
+			e experiências únicas em destinos internacionais inesquecíveis.
 		</p>
 		
 		<div class="carousel-container">
-			<div class="carousel-track" id="carousel-track">
-				{destinos.map((destino) => (
+			<div class="carousel-track" id="carousel-track-internacional">
+				{destinosInternacionais.map((destino) => (
 					<div class="destino-card">
 						<a href={`/destinos/${destino.id}/`} class="card-link">
 							{destino.data.isPromo && (
@@ -51,7 +51,7 @@ const destinos = (await getCollection('destinos')).sort(
 					</div>
 				))}
 				<!-- Duplicar cards para efeito infinito -->
-				{destinos.map((destino) => (
+				{destinosInternacionais.map((destino) => (
 					<div class="destino-card">
 						<a href={`/destinos/${destino.id}/`} class="card-link">
 							{destino.data.isPromo && (
@@ -91,7 +91,7 @@ const destinos = (await getCollection('destinos')).sort(
 <style>
 	.destinos-section {
 		padding: 4rem 0;
-		background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+		background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
 	}
 
 	.container {
@@ -126,7 +126,7 @@ const destinos = (await getCollection('destinos')).sort(
 	.carousel-track {
 		display: flex;
 		gap: 2rem;
-		animation: scroll 30s linear infinite;
+		animation: scroll 35s linear infinite;
 		width: fit-content;
 	}
 
@@ -238,7 +238,7 @@ const destinos = (await getCollection('destinos')).sort(
 	.price {
 		font-size: 1.25rem;
 		font-weight: bold;
-		color: #8e44ad;
+		color: #1976d2;
 		background: #f8f9fa;
 		padding: 0.75rem 1rem;
 		border-radius: 8px;
@@ -262,7 +262,7 @@ const destinos = (await getCollection('destinos')).sort(
 
 <script>
 	// Pausar animação quando o mouse estiver sobre o carousel
-	const track = document.getElementById('carousel-track');
+	const track = document.getElementById('carousel-track-internacional');
 	if (track) {
 		track.addEventListener('mouseenter', () => {
 			track.style.animationPlayState = 'paused';

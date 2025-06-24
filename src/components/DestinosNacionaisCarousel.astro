@@ -1,0 +1,275 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+
+const allDestinos = await getCollection('destinos');
+const destinosNacionais = allDestinos
+	.filter(destino => destino.data.country === 'BRASIL')
+	.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+---
+
+<section class="destinos-section">
+	<div class="container">
+		<h2 class="section-title">Destinos Nacionais</h2>
+		<p class="section-description">
+			Descubra as belezas do Brasil com a Partiu Viagens. Explore destinos incríveis sem sair do país,
+			com todo conforto e segurança que você merece.
+		</p>
+		
+		<div class="carousel-container">
+			<div class="carousel-track" id="carousel-track-nacional">
+				{destinosNacionais.map((destino) => (
+					<div class="destino-card">
+						<a href={`/destinos/${destino.id}/`} class="card-link">
+							{destino.data.isPromo && (
+								<div class="promo-badge">PROMO</div>
+							)}
+							<div class="card-image">
+								<Image 
+									src={destino.data.featuredImage} 
+									alt={destino.data.title}
+									width={300}
+									height={200}
+									class="card-img"
+								/>
+							</div>
+							<div class="card-content">
+								<div class="rating">
+									<span class="stars">{'★'.repeat(Math.floor(destino.data.rating))}</span>
+									<span class="rating-text">{destino.data.rating} ({destino.data.reviewCount} Reviews)</span>
+								</div>
+								<h3 class="card-title">{destino.data.title}</h3>
+								<div class="location">
+									<span class="location-icon">📍</span>
+									<span class="location-text">{destino.data.location}</span>
+								</div>
+								<div class="price">
+									{destino.data.currency} {destino.data.price.toLocaleString('pt-BR')}
+								</div>
+							</div>
+						</a>
+					</div>
+				))}
+				<!-- Duplicar cards para efeito infinito -->
+				{destinosNacionais.map((destino) => (
+					<div class="destino-card">
+						<a href={`/destinos/${destino.id}/`} class="card-link">
+							{destino.data.isPromo && (
+								<div class="promo-badge">PROMO</div>
+							)}
+							<div class="card-image">
+								<Image 
+									src={destino.data.featuredImage} 
+									alt={destino.data.title}
+									width={300}
+									height={200}
+									class="card-img"
+								/>
+							</div>
+							<div class="card-content">
+								<div class="rating">
+									<span class="stars">{'★'.repeat(Math.floor(destino.data.rating))}</span>
+									<span class="rating-text">{destino.data.rating} ({destino.data.reviewCount} Reviews)</span>
+								</div>
+								<h3 class="card-title">{destino.data.title}</h3>
+								<div class="location">
+									<span class="location-icon">📍</span>
+									<span class="location-text">{destino.data.location}</span>
+								</div>
+								<div class="price">
+									{destino.data.currency} {destino.data.price.toLocaleString('pt-BR')}
+								</div>
+							</div>
+						</a>
+					</div>
+				))}
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.destinos-section {
+		padding: 4rem 0;
+		background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+	}
+
+	.container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 2rem;
+	}
+
+	.section-title {
+		font-size: 2.5rem;
+		font-weight: bold;
+		text-align: center;
+		margin-bottom: 1rem;
+		color: #2c3e50;
+	}
+
+	.section-description {
+		font-size: 1.1rem;
+		text-align: center;
+		max-width: 600px;
+		margin: 0 auto 3rem;
+		color: #5a6c7d;
+		line-height: 1.6;
+	}
+
+	.carousel-container {
+		overflow: hidden;
+		position: relative;
+		width: 100%;
+	}
+
+	.carousel-track {
+		display: flex;
+		gap: 2rem;
+		animation: scroll 30s linear infinite;
+		width: fit-content;
+	}
+
+	@keyframes scroll {
+		0% {
+			transform: translateX(0);
+		}
+		100% {
+			transform: translateX(-50%);
+		}
+	}
+
+	.carousel-track:hover {
+		animation-play-state: paused;
+	}
+
+	.destino-card {
+		flex: 0 0 320px;
+		background: white;
+		border-radius: 16px;
+		overflow: hidden;
+		box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+		transition: all 0.3s ease;
+		position: relative;
+	}
+
+	.destino-card:hover {
+		transform: translateY(-8px);
+		box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+	}
+
+	.card-link {
+		text-decoration: none;
+		color: inherit;
+		display: block;
+	}
+
+	.promo-badge {
+		position: absolute;
+		top: 1rem;
+		left: 1rem;
+		background: #e91e63;
+		color: white;
+		padding: 0.5rem 1rem;
+		border-radius: 20px;
+		font-size: 0.875rem;
+		font-weight: bold;
+		z-index: 2;
+	}
+
+	.card-image {
+		position: relative;
+		height: 200px;
+		overflow: hidden;
+	}
+
+	.card-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.3s ease;
+	}
+
+	.destino-card:hover .card-img {
+		transform: scale(1.05);
+	}
+
+	.card-content {
+		padding: 1.5rem;
+	}
+
+	.rating {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.stars {
+		color: #ffc107;
+		font-size: 1rem;
+	}
+
+	.rating-text {
+		font-size: 0.875rem;
+		color: #6c757d;
+	}
+
+	.card-title {
+		font-size: 1.5rem;
+		font-weight: bold;
+		margin: 0 0 0.75rem 0;
+		color: #2c3e50;
+	}
+
+	.location {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin-bottom: 1rem;
+		color: #6c757d;
+		font-size: 0.95rem;
+	}
+
+	.location-icon {
+		font-size: 1rem;
+	}
+
+	.price {
+		font-size: 1.25rem;
+		font-weight: bold;
+		color: #27ae60;
+		background: #f8f9fa;
+		padding: 0.75rem 1rem;
+		border-radius: 8px;
+		text-align: center;
+	}
+
+	@media (max-width: 768px) {
+		.section-title {
+			font-size: 2rem;
+		}
+
+		.destino-card {
+			flex: 0 0 280px;
+		}
+
+		.carousel-track {
+			gap: 1rem;
+		}
+	}
+</style>
+
+<script>
+	// Pausar animação quando o mouse estiver sobre o carousel
+	const track = document.getElementById('carousel-track-nacional');
+	if (track) {
+		track.addEventListener('mouseenter', () => {
+			track.style.animationPlayState = 'paused';
+		});
+
+		track.addEventListener('mouseleave', () => {
+			track.style.animationPlayState = 'running';
+		});
+	}
+</script>

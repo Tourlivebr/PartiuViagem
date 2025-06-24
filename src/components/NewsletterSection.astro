@@ -1,0 +1,359 @@
+---
+export interface Props {
+	title?: string;
+	subtitle?: string;
+	description?: string;
+	placeholder?: string;
+	buttonText?: string;
+	backgroundColor?: string;
+	textColor?: string;
+	containerMaxWidth?: string;
+}
+
+const {
+	title = "Assine nossa Newsletter e",
+	subtitle = "Receba promoções incríveis!",
+	description = "Lorem ipsum dolor sit amet consectetur. Aliquet malesuada tellus viverra ultricies egestas sociis gravida sem. Enim elit massa ullamcorper erat.",
+	placeholder = "Digite seu melhor e-mail",
+	buttonText = "Assinar",
+	backgroundColor = "linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%)",
+	textColor = "#ffffff",
+	containerMaxWidth = "1200px"
+} = Astro.props;
+---
+
+<section class="newsletter-section" style={`background: ${backgroundColor}; color: ${textColor};`}>
+	<div class="container" style={`max-width: ${containerMaxWidth};`}>
+		<div class="newsletter-content">
+			<!-- Decorative Element -->
+			<div class="decorative-element">
+				<svg width="200" height="150" viewBox="0 0 200 150" fill="none">
+					<path d="M20 80C20 80 40 60 80 70C120 80 140 50 180 60C180 60 190 65 190 75L190 130C190 140 180 150 170 150L30 150C20 150 10 140 10 130L10 90C10 85 15 80 20 80Z" fill="url(#gradient1)" opacity="0.8"/>
+					<path d="M30 40C30 40 50 20 90 30C130 40 150 10 190 20C190 20 200 25 200 35L200 90C200 100 190 110 180 110L40 110C30 110 20 100 20 90L20 50C20 45 25 40 30 40Z" fill="url(#gradient2)" opacity="0.6"/>
+					<defs>
+						<linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+							<stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+							<stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
+						</linearGradient>
+						<linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+							<stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+							<stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+						</linearGradient>
+					</defs>
+				</svg>
+			</div>
+
+			<!-- Main Content -->
+			<div class="main-content">
+				<div class="text-content">
+					<h2 class="newsletter-title">
+						{title}<br/>
+						<span class="subtitle">{subtitle}</span>
+					</h2>
+					<p class="newsletter-description">{description}</p>
+				</div>
+
+				<div class="newsletter-form">
+					<form class="email-form" id="newsletterForm">
+						<div class="input-group">
+							<input 
+								type="email" 
+								class="email-input" 
+								placeholder={placeholder}
+								required
+								id="emailInput"
+							/>
+							<button type="submit" class="submit-btn">
+								{buttonText}
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+									<path d="M5 12h14m-7-7l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+								</svg>
+							</button>
+						</div>
+						<div class="form-message" id="formMessage"></div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.newsletter-section {
+		padding: 5rem 0;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.container {
+		margin: 0 auto;
+		padding: 0 2rem;
+	}
+
+	.newsletter-content {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		position: relative;
+		min-height: 300px;
+	}
+
+	.decorative-element {
+		position: absolute;
+		left: -50px;
+		top: 50%;
+		transform: translateY(-50%);
+		z-index: 1;
+		opacity: 0.8;
+	}
+
+	.main-content {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
+		max-width: 900px;
+		margin: 0 auto;
+		position: relative;
+		z-index: 2;
+		gap: 3rem;
+	}
+
+	.text-content {
+		flex: 1;
+		max-width: 450px;
+	}
+
+	.newsletter-title {
+		font-size: 2.5rem;
+		font-weight: 700;
+		line-height: 1.2;
+		margin-bottom: 1.5rem;
+		color: inherit;
+	}
+
+	.subtitle {
+		display: block;
+		color: #fbbf24;
+		font-weight: 600;
+	}
+
+	.newsletter-description {
+		font-size: 1.1rem;
+		line-height: 1.6;
+		opacity: 0.9;
+		margin: 0;
+	}
+
+	.newsletter-form {
+		flex: 1;
+		max-width: 400px;
+	}
+
+	.email-form {
+		width: 100%;
+	}
+
+	.input-group {
+		display: flex;
+		background: rgba(255, 255, 255, 0.95);
+		border-radius: 50px;
+		padding: 8px;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+		transition: all 0.3s ease;
+	}
+
+	.input-group:focus-within {
+		box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+		transform: translateY(-2px);
+	}
+
+	.email-input {
+		flex: 1;
+		border: none;
+		outline: none;
+		padding: 1rem 1.5rem;
+		font-size: 1rem;
+		background: transparent;
+		color: #374151;
+		border-radius: 50px;
+	}
+
+	.email-input::placeholder {
+		color: #9ca3af;
+	}
+
+	.submit-btn {
+		background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+		color: white;
+		border: none;
+		padding: 1rem 2rem;
+		border-radius: 50px;
+		font-weight: 600;
+		font-size: 1rem;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		white-space: nowrap;
+	}
+
+	.submit-btn:hover {
+		background: linear-gradient(135deg, #059669 0%, #047857 100%);
+		transform: translateY(-1px);
+		box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
+	}
+
+	.submit-btn:active {
+		transform: translateY(0);
+	}
+
+	.form-message {
+		margin-top: 1rem;
+		padding: 0.5rem;
+		border-radius: 8px;
+		font-size: 0.9rem;
+		text-align: center;
+		transition: all 0.3s ease;
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+
+	.form-message.show {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.form-message.success {
+		background: rgba(16, 185, 129, 0.2);
+		color: #10b981;
+		border: 1px solid rgba(16, 185, 129, 0.3);
+	}
+
+	.form-message.error {
+		background: rgba(239, 68, 68, 0.2);
+		color: #ef4444;
+		border: 1px solid rgba(239, 68, 68, 0.3);
+	}
+
+	@media (max-width: 768px) {
+		.newsletter-section {
+			padding: 3rem 0;
+		}
+
+		.container {
+			padding: 0 1rem;
+		}
+
+		.newsletter-content {
+			min-height: auto;
+		}
+
+		.decorative-element {
+			display: none;
+		}
+
+		.main-content {
+			flex-direction: column;
+			text-align: center;
+			gap: 2rem;
+		}
+
+		.newsletter-title {
+			font-size: 2rem;
+		}
+
+		.input-group {
+			flex-direction: column;
+			gap: 0.5rem;
+			padding: 1rem;
+			border-radius: 20px;
+		}
+
+		.email-input {
+			border-radius: 15px;
+			padding: 1rem;
+		}
+
+		.submit-btn {
+			border-radius: 15px;
+			justify-content: center;
+			width: 100%;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.newsletter-title {
+			font-size: 1.75rem;
+		}
+
+		.newsletter-description {
+			font-size: 1rem;
+		}
+	}
+</style>
+
+<script>
+	class NewsletterForm {
+		constructor() {
+			this.form = document.getElementById('newsletterForm');
+			this.emailInput = document.getElementById('emailInput');
+			this.messageDiv = document.getElementById('formMessage');
+
+			if (this.form) {
+				this.init();
+			}
+		}
+
+		init() {
+			this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+		}
+
+		async handleSubmit(e) {
+			e.preventDefault();
+			
+			const email = this.emailInput.value.trim();
+			
+			if (!this.isValidEmail(email)) {
+				this.showMessage('Por favor, insira um e-mail válido.', 'error');
+				return;
+			}
+
+			// Simular envio (aqui você integraria com sua API)
+			this.showMessage('Processando...', 'info');
+			
+			try {
+				// Simular delay de API
+				await new Promise(resolve => setTimeout(resolve, 1500));
+				
+				// Simular sucesso (substitua pela sua lógica de API)
+				this.showMessage('Obrigado! Você foi inscrito com sucesso em nossa newsletter.', 'success');
+				this.emailInput.value = '';
+				
+			} catch (error) {
+				this.showMessage('Erro ao processar inscrição. Tente novamente.', 'error');
+			}
+		}
+
+		isValidEmail(email) {
+			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			return emailRegex.test(email);
+		}
+
+		showMessage(message, type) {
+			this.messageDiv.textContent = message;
+			this.messageDiv.className = `form-message ${type} show`;
+			
+			// Auto-hide message after 5 seconds
+			setTimeout(() => {
+				this.messageDiv.classList.remove('show');
+			}, 5000);
+		}
+	}
+
+	// Inicializar quando o DOM estiver carregado
+	document.addEventListener('DOMContentLoaded', () => {
+		new NewsletterForm();
+	});
+</script>

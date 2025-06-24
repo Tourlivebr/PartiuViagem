@@ -1,6 +1,8 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 import { Image } from 'astro:assets';
 
 type Props = CollectionEntry<'destinos'>['data'];
@@ -13,7 +15,16 @@ const { title, description, location, country, price, currency, rating, reviewCo
 		<BaseHead title={title} description={description} />
 	</head>
 	<body>
+		<Header />
 		<main>
+			<div class="back-button-container">
+				<a href="javascript:history.back()" class="back-button">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+						<path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					</svg>
+					Voltar
+				</a>
+			</div>
 			<article class="destino-detail">
 				<div class="hero-section">
 					<Image 
@@ -60,6 +71,7 @@ const { title, description, location, country, price, currency, rating, reviewCo
 				)}
 			</article>
 		</main>
+		<Footer />
 	</body>
 </html>
 
@@ -70,6 +82,39 @@ const { title, description, location, country, price, currency, rating, reviewCo
 		font-family: system-ui, sans-serif;
 	}
 
+	main {
+		padding-top: 120px; /* Compensar altura do header fixo + espaçamento extra */
+		min-height: calc(100vh - 120px);
+	}
+
+	.back-button-container {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 1rem 2rem 1rem 2rem;
+	}
+
+	.back-button {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.75rem 1.5rem;
+		background: rgba(255, 255, 255, 0.9);
+		color: #059669;
+		text-decoration: none;
+		border-radius: 50px;
+		font-weight: 600;
+		transition: all 0.3s ease;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		border: 2px solid transparent;
+	}
+
+	.back-button:hover {
+		background: #059669;
+		color: white;
+		transform: translateY(-2px);
+		box-shadow: 0 6px 20px rgba(5, 150, 105, 0.3);
+	}
+
 	.destino-detail {
 		max-width: 1200px;
 		margin: 0 auto;
@@ -78,9 +123,10 @@ const { title, description, location, country, price, currency, rating, reviewCo
 	.hero-section {
 		position: relative;
 		height: 60vh;
+		min-height: 400px;
 		overflow: hidden;
 		border-radius: 16px;
-		margin: 2rem;
+		margin: 1rem 2rem 0 2rem;
 	}
 
 	.hero-image {
@@ -157,17 +203,31 @@ const { title, description, location, country, price, currency, rating, reviewCo
 	}
 
 	@media (max-width: 768px) {
+		.back-button-container {
+			padding: 0.75rem 1rem 0.75rem 1rem;
+		}
+
 		.hero-content h1 {
 			font-size: 2rem;
 		}
 
 		.hero-section {
 			height: 50vh;
-			margin: 1rem;
+			min-height: 300px;
+			margin: 0.5rem 1rem 0 1rem;
+			border-radius: 12px;
 		}
 
 		.content-section {
 			padding: 1rem;
+		}
+
+		.gallery-section {
+			padding: 1rem;
+		}
+
+		.gallery-grid {
+			grid-template-columns: 1fr;
 		}
 	}
 </style>

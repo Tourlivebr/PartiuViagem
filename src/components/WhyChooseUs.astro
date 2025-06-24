@@ -1,0 +1,190 @@
+---
+export interface Props {
+	title?: string;
+	description?: string;
+	features?: Array<{
+		icon: string;
+		title: string;
+		description: string;
+	}>;
+	backgroundColor?: string;
+	textColor?: string;
+	containerMaxWidth?: string;
+}
+
+const {
+	title = "Porque escolher a Partiu Viagens?",
+	description = "Escolha a Partiu Viagens e descubra o mundo com quem entende de aventuras. Oferecemos excursões personalizadas, guias experientes e um atendimento que coloca você em primeiro lugar. Viaje com segurança, conforto e a certeza de que cada detalhe foi pensado para proporcionar a melhor experiência.",
+	features = [
+		{
+			icon: "✏️",
+			title: "Passeios Personalizados",
+			description: "Lorem ipsum dolor sit amet consectetur. Aliquet malesuada tellus viverra ultricies egestas sociis gravida sem. Enim elit massa ullamcorper erat."
+		},
+		{
+			icon: "👥",
+			title: "+ de 5.000 clientes",
+			description: "Lorem ipsum dolor sit amet consectetur. Aliquet malesuada tellus viverra ultricies egestas sociis gravida sem. Enim elit massa ullamcorper erat."
+		},
+		{
+			icon: "🛡️",
+			title: "Certificada",
+			description: "Lorem ipsum dolor sit amet consectetur. Aliquet malesuada tellus viverra ultricies egestas sociis gravida sem. Enim elit massa ullamcorper erat."
+		}
+	],
+	backgroundColor = "#f8f9fa",
+	textColor = "#2c3e50",
+	containerMaxWidth = "1200px"
+} = Astro.props;
+---
+
+<section class="why-choose-us">
+	<div class="container">
+		<div class="content-wrapper">
+			<h2 class="section-title">{title}</h2>
+			<p class="section-description">{description}</p>
+			
+			<div class="features-grid">
+				{features.map((feature) => (
+					<div class="feature-card">
+						<div class="feature-icon">
+							<span class="icon">{feature.icon}</span>
+						</div>
+						<h3 class="feature-title">{feature.title}</h3>
+						<p class="feature-description">{feature.description}</p>
+					</div>
+				))}
+			</div>
+		</div>
+	</div>
+</section>
+
+<style define:vars={{ backgroundColor, textColor, containerMaxWidth }}>
+	.why-choose-us {
+		padding: 5rem 0;
+		background-color: var(--backgroundColor);
+		position: relative;
+	}
+
+	.container {
+		max-width: var(--containerMaxWidth);
+		margin: 0 auto;
+		padding: 0 2rem;
+	}
+
+	.content-wrapper {
+		text-align: center;
+	}
+
+	.section-title {
+		font-size: 2.5rem;
+		font-weight: bold;
+		color: var(--textColor);
+		margin-bottom: 1.5rem;
+		line-height: 1.2;
+	}
+
+	.section-description {
+		font-size: 1.1rem;
+		color: #5a6c7d;
+		line-height: 1.6;
+		max-width: 800px;
+		margin: 0 auto 4rem;
+	}
+
+	.features-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 3rem;
+		margin-top: 3rem;
+	}
+
+	.feature-card {
+		text-align: center;
+		padding: 2rem 1rem;
+		transition: transform 0.3s ease;
+	}
+
+	.feature-card:hover {
+		transform: translateY(-5px);
+	}
+
+	.feature-icon {
+		width: 80px;
+		height: 80px;
+		background: #1e3a8a;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 0 auto 1.5rem;
+		box-shadow: 0 4px 15px rgba(30, 58, 138, 0.2);
+	}
+
+	.icon {
+		font-size: 2rem;
+		color: white;
+	}
+
+	.feature-title {
+		font-size: 1.5rem;
+		font-weight: bold;
+		color: var(--textColor);
+		margin-bottom: 1rem;
+		line-height: 1.3;
+	}
+
+	.feature-description {
+		font-size: 1rem;
+		color: #6c757d;
+		line-height: 1.6;
+		margin: 0;
+	}
+
+	@media (max-width: 768px) {
+		.why-choose-us {
+			padding: 3rem 0;
+		}
+
+		.section-title {
+			font-size: 2rem;
+		}
+
+		.section-description {
+			font-size: 1rem;
+			margin-bottom: 2rem;
+		}
+
+		.features-grid {
+			grid-template-columns: 1fr;
+			gap: 2rem;
+		}
+
+		.feature-icon {
+			width: 70px;
+			height: 70px;
+		}
+
+		.icon {
+			font-size: 1.75rem;
+		}
+
+		.feature-title {
+			font-size: 1.25rem;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.container {
+			padding: 0 1rem;
+		}
+
+		.section-title {
+			font-size: 1.75rem;
+		}
+
+		.feature-card {
+			padding: 1.5rem 0.5rem;
+		}
+	}
+</style>

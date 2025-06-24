@@ -16,7 +16,13 @@
 		<nav class="navigation">
 			<ul class="nav-list">
 				<li><a href="/" class="nav-link">INÍCIO</a></li>
-				<li><a href="/destinos" class="nav-link">DESTINOS</a></li>
+				<li class="dropdown">
+					<span class="nav-link dropdown-toggle">DESTINOS</span>
+					<ul class="dropdown-menu">
+						<li><a href="/destinos/nacionais" class="dropdown-link">Nacionais</a></li>
+						<li><a href="/destinos/internacionais" class="dropdown-link">Internacionais</a></li>
+					</ul>
+				</li>
 				<li><a href="/grupos" class="nav-link">GRUPOS</a></li>
 				<li><a href="/clientes" class="nav-link">CLIENTES</a></li>
 				<li><a href="/contato" class="nav-link">CONTATO</a></li>
@@ -143,6 +149,65 @@
 
 	.nav-link:hover::after {
 		width: 100%;
+	}
+
+	/* Dropdown Styles */
+	.dropdown {
+		position: relative;
+	}
+
+	.dropdown-toggle {
+		cursor: pointer;
+		position: relative;
+		z-index: 1001;
+	}
+
+	.dropdown-toggle {
+		position: relative;
+		transition: color 0.3s ease;
+	}
+
+	.dropdown:hover .dropdown-toggle {
+		color: #1e3a8a;
+	}
+
+	.dropdown-menu {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		background: white;
+		border-radius: 8px;
+		box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+		min-width: 180px;
+		padding: 0.5rem 0;
+		list-style: none;
+		margin: 0;
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(-10px);
+		transition: all 0.3s ease;
+		z-index: 1000;
+	}
+
+	.dropdown:hover .dropdown-menu {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+	}
+
+	.dropdown-link {
+		display: block;
+		padding: 0.75rem 1.5rem;
+		color: #374151;
+		text-decoration: none;
+		font-weight: 500;
+		font-size: 0.9rem;
+		transition: all 0.3s ease;
+	}
+
+	.dropdown-link:hover {
+		background: #f3f4f6;
+		color: #1e3a8a;
 	}
 
 	.social-icons {
