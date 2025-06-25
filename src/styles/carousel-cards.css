@@ -7,7 +7,6 @@
 	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 	transition: all 0.3s ease;
 	position: relative;
-	height: 420px; /* Altura fixa para consistência */
 	display: flex;
 	flex-direction: column;
 }
@@ -131,7 +130,6 @@
 @media (max-width: 768px) {
 	.destinos-section .destino-card {
 		flex: 0 0 300px !important;
-		height: 420px !important;
 		border-radius: 16px !important;
 		box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
 		margin: 0 10px !important;
@@ -166,11 +164,11 @@
 
 	.destinos-section .card-content {
 		padding: 1.2rem !important;
-		height: 240px !important;
 		display: flex !important;
 		flex-direction: column !important;
 		justify-content: space-between !important;
 		margin: 0 !important;
+		flex-grow: 1;
 	}
 
 	.destinos-section .card-info {
