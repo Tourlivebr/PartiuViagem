@@ -46,11 +46,24 @@ const { title, description, location, country, price, currency, rating, reviewCo
 						<div class="price-info">
 							<span class="price">{currency} {price.toLocaleString('pt-BR')}</span>
 						</div>
+
 					</div>
 				</div>
 
 				<div class="content-section">
 					<slot />
+				</div>
+
+				<div class="whatsapp-button-container">
+					<a 
+						href={`https://wa.me/5554999019635?text=Olá,%20tenho%20interesse%20no%20passeio%20${encodeURIComponent(title)}`}
+						class="whatsapp-button"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.269.655 4.357 1.846 6.067l-1.254 4.587 4.68-1.235z"/></svg>
+						Reservar no WhatsApp
+					</a>
 				</div>
 
 				{galleryImages && galleryImages.length > 0 && (
@@ -122,11 +135,12 @@ const { title, description, location, country, price, currency, rating, reviewCo
 
 	.hero-section {
 		position: relative;
-		height: 60vh;
-		min-height: 400px;
+		height: 70vh;
+		min-height: 500px;
 		overflow: hidden;
-		border-radius: 16px;
+		border-radius: 24px;
 		margin: 1rem 2rem 0 2rem;
+		box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 	}
 
 	.hero-image {
@@ -146,8 +160,10 @@ const { title, description, location, country, price, currency, rating, reviewCo
 	}
 
 	.hero-content h1 {
-		font-size: 3rem;
+		font-size: 4rem;
 		margin: 0 0 1rem 0;
+		font-weight: 900;
+		text-shadow: 0 2px 10px rgba(0,0,0,0.3);
 	}
 
 	.location-info {
@@ -173,10 +189,11 @@ const { title, description, location, country, price, currency, rating, reviewCo
 	}
 
 	.content-section {
-		padding: 2rem;
+		padding: 4rem 2rem;
 		max-width: 800px;
 		margin: 0 auto;
-		line-height: 1.6;
+		line-height: 1.8;
+		font-size: 1.1rem;
 	}
 
 	.gallery-section {
@@ -191,15 +208,52 @@ const { title, description, location, country, price, currency, rating, reviewCo
 
 	.gallery-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-		gap: 1rem;
+		grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+		gap: 1.5rem;
 	}
 
 	.gallery-image {
 		width: 100%;
-		height: 300px;
+		height: 350px;
 		object-fit: cover;
-		border-radius: 8px;
+		border-radius: 16px;
+		transition: transform 0.3s ease, box-shadow 0.3s ease;
+	}
+
+	.gallery-image:hover {
+		transform: scale(1.03);
+		box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+	}
+
+	.whatsapp-button-container {
+		text-align: center;
+		margin: 2rem 0;
+	}
+
+	.whatsapp-button {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.75rem;
+		padding: 1rem 2rem;
+		background-color: #25D366;
+		color: white;
+		text-decoration: none;
+		border-radius: 50px;
+		font-weight: bold;
+		font-size: 1.1rem;
+		transition: all 0.3s ease;
+		box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+	}
+
+	.whatsapp-button:hover {
+		background-color: #1EBE57;
+		transform: translateY(-3px);
+		box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+	}
+
+	.whatsapp-button svg {
+		width: 24px;
+		height: 24px;
 	}
 
 	@media (max-width: 768px) {
