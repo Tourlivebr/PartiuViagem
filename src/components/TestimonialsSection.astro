@@ -59,7 +59,7 @@ const {
 } = Astro.props;
 ---
 
-<section class="testimonials-section" style={`background-color: ${backgroundColor}; color: ${textColor};`}>
+<section id="testimonials" class="testimonials-section" style={`background-color: ${backgroundColor}; color: ${textColor};`}>
 	<div class="container" style={`max-width: ${containerMaxWidth};`}>
 		<div class="content-wrapper">
 			<!-- Seção de Título -->
@@ -139,6 +139,7 @@ const {
 	.testimonials-section {
 		padding: 4rem 0;
 		position: relative;
+		scroll-margin-top: 120px; /* Adjust for fixed header */
 	}
 
 	.container {
