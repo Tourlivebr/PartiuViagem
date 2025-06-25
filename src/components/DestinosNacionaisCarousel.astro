@@ -8,6 +8,8 @@ const destinosNacionais = allDestinos
 	.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
 ---
 
+<link rel="stylesheet" href="/src/styles/carousel-cards.css">
+
 <section class="destinos-section">
 	<div class="container">
 		<h2 class="section-title">Destinos Nacionais</h2>
@@ -34,16 +36,18 @@ const destinosNacionais = allDestinos
 								/>
 							</div>
 							<div class="card-content">
-								<div class="rating">
-									<span class="stars">{'★'.repeat(Math.floor(destino.data.rating))}</span>
-									<span class="rating-text">{destino.data.rating} ({destino.data.reviewCount} Reviews)</span>
+								<div class="card-info">
+									<div class="rating">
+										<span class="stars">{'★'.repeat(Math.floor(destino.data.rating))}</span>
+										<span class="rating-text">{destino.data.rating} ({destino.data.reviewCount} Reviews)</span>
+									</div>
+									<h3 class="card-title">{destino.data.title}</h3>
+									<div class="location">
+										<span class="location-icon">📍</span>
+										<span class="location-text">{destino.data.location}</span>
+									</div>
 								</div>
-								<h3 class="card-title">{destino.data.title}</h3>
-								<div class="location">
-									<span class="location-icon">📍</span>
-									<span class="location-text">{destino.data.location}</span>
-								</div>
-								<div class="price">
+								<div class="price nacional">
 									{destino.data.currency} {destino.data.price.toLocaleString('pt-BR')}
 								</div>
 							</div>
@@ -67,16 +71,18 @@ const destinosNacionais = allDestinos
 								/>
 							</div>
 							<div class="card-content">
-								<div class="rating">
-									<span class="stars">{'★'.repeat(Math.floor(destino.data.rating))}</span>
-									<span class="rating-text">{destino.data.rating} ({destino.data.reviewCount} Reviews)</span>
+								<div class="card-info">
+									<div class="rating">
+										<span class="stars">{'★'.repeat(Math.floor(destino.data.rating))}</span>
+										<span class="rating-text">{destino.data.rating} ({destino.data.reviewCount} Reviews)</span>
+									</div>
+									<h3 class="card-title">{destino.data.title}</h3>
+									<div class="location">
+										<span class="location-icon">📍</span>
+										<span class="location-text">{destino.data.location}</span>
+									</div>
 								</div>
-								<h3 class="card-title">{destino.data.title}</h3>
-								<div class="location">
-									<span class="location-icon">📍</span>
-									<span class="location-text">{destino.data.location}</span>
-								</div>
-								<div class="price">
+								<div class="price nacional">
 									{destino.data.currency} {destino.data.price.toLocaleString('pt-BR')}
 								</div>
 							</div>
@@ -143,115 +149,11 @@ const destinosNacionais = allDestinos
 		animation-play-state: paused;
 	}
 
-	.destino-card {
-		flex: 0 0 320px;
-		background: white;
-		border-radius: 16px;
-		overflow: hidden;
-		box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-		transition: all 0.3s ease;
-		position: relative;
-	}
 
-	.destino-card:hover {
-		transform: translateY(-8px);
-		box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-	}
-
-	.card-link {
-		text-decoration: none;
-		color: inherit;
-		display: block;
-	}
-
-	.promo-badge {
-		position: absolute;
-		top: 1rem;
-		left: 1rem;
-		background: #e91e63;
-		color: white;
-		padding: 0.5rem 1rem;
-		border-radius: 20px;
-		font-size: 0.875rem;
-		font-weight: bold;
-		z-index: 2;
-	}
-
-	.card-image {
-		position: relative;
-		height: 200px;
-		overflow: hidden;
-	}
-
-	.card-img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		transition: transform 0.3s ease;
-	}
-
-	.destino-card:hover .card-img {
-		transform: scale(1.05);
-	}
-
-	.card-content {
-		padding: 1.5rem;
-	}
-
-	.rating {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		margin-bottom: 0.75rem;
-	}
-
-	.stars {
-		color: #ffc107;
-		font-size: 1rem;
-	}
-
-	.rating-text {
-		font-size: 0.875rem;
-		color: #6c757d;
-	}
-
-	.card-title {
-		font-size: 1.5rem;
-		font-weight: bold;
-		margin: 0 0 0.75rem 0;
-		color: #2c3e50;
-	}
-
-	.location {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		margin-bottom: 1rem;
-		color: #6c757d;
-		font-size: 0.95rem;
-	}
-
-	.location-icon {
-		font-size: 1rem;
-	}
-
-	.price {
-		font-size: 1.25rem;
-		font-weight: bold;
-		color: #27ae60;
-		background: #f8f9fa;
-		padding: 0.75rem 1rem;
-		border-radius: 8px;
-		text-align: center;
-	}
 
 	@media (max-width: 768px) {
 		.section-title {
 			font-size: 2rem;
-		}
-
-		.destino-card {
-			flex: 0 0 280px;
 		}
 
 		.carousel-track {

@@ -1,0 +1,339 @@
+/* Estilos compartilhados para cards de carrossel */
+.destino-card {
+	flex: 0 0 320px;
+	background: white;
+	border-radius: 16px;
+	overflow: hidden;
+	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+	transition: all 0.3s ease;
+	position: relative;
+	height: 420px; /* Altura fixa para consistência */
+	display: flex;
+	flex-direction: column;
+}
+
+.destino-card:hover {
+	transform: translateY(-8px);
+	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.card-link {
+	text-decoration: none;
+	color: inherit;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+.promo-badge {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	background: #e91e63;
+	color: white;
+	padding: 0.5rem 1rem;
+	border-radius: 20px;
+	font-size: 0.875rem;
+	font-weight: bold;
+	z-index: 2;
+}
+
+.card-image {
+	position: relative;
+	height: 200px;
+	overflow: hidden;
+	flex-shrink: 0;
+}
+
+.card-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 0.3s ease;
+}
+
+.destino-card:hover .card-img {
+	transform: scale(1.05);
+}
+
+.card-content {
+	padding: 1.5rem;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.card-info {
+	flex: 1;
+}
+
+.rating {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	margin-bottom: 0.75rem;
+}
+
+.stars {
+	color: #ffc107;
+	font-size: 1rem;
+}
+
+.rating-text {
+	font-size: 0.875rem;
+	color: #6c757d;
+}
+
+.card-title {
+	font-size: 1.5rem;
+	font-weight: bold;
+	margin: 0 0 0.75rem 0;
+	color: #2c3e50;
+	line-height: 1.3;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.location {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	margin-bottom: 1rem;
+	color: #6c757d;
+	font-size: 0.95rem;
+}
+
+.location-icon {
+	font-size: 1rem;
+}
+
+.price {
+	font-size: 1.25rem;
+	font-weight: bold;
+	background: #f8f9fa;
+	padding: 0.75rem 1rem;
+	border-radius: 8px;
+	text-align: center;
+	margin-top: auto;
+}
+
+.price.nacional {
+	color: #27ae60;
+}
+
+.price.internacional {
+	color: #1976d2;
+}
+
+@media (max-width: 768px) {
+	.destinos-section .destino-card {
+		flex: 0 0 300px !important;
+		height: 420px !important;
+		border-radius: 16px !important;
+		box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+		margin: 0 10px !important;
+		padding: 0 !important;
+	}
+
+	.destinos-section .destino-card:hover {
+		transform: translateY(-8px) !important;
+		box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15) !important;
+	}
+
+	.destinos-section .card-image {
+		height: 180px !important;
+		border-radius: 16px 16px 0 0 !important;
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+
+	.destinos-section .card-title {
+		font-size: 1.3rem !important;
+		margin-bottom: 0.75rem !important;
+		line-height: 1.3 !important;
+		-webkit-line-clamp: 2;
+		display: -webkit-box !important;
+		-webkit-box-orient: vertical;
+		overflow: hidden !important;
+		font-weight: bold !important;
+		color: #2c3e50 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+	}
+
+	.destinos-section .card-content {
+		padding: 1.2rem !important;
+		height: 240px !important;
+		display: flex !important;
+		flex-direction: column !important;
+		justify-content: space-between !important;
+		margin: 0 !important;
+	}
+
+	.destinos-section .card-info {
+		flex: 1 !important;
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+
+	.destinos-section .rating {
+		display: flex !important;
+		align-items: center !important;
+		gap: 0.5rem !important;
+		margin-bottom: 0.75rem !important;
+		padding: 0 !important;
+		margin-top: 0 !important;
+	}
+
+	.destinos-section .stars {
+		color: #ffc107 !important;
+		font-size: 1rem !important;
+	}
+
+	.destinos-section .rating-text {
+		font-size: 0.875rem !important;
+		color: #6c757d !important;
+	}
+
+	.destinos-section .location {
+		display: flex !important;
+		align-items: center !important;
+		gap: 0.5rem !important;
+		margin-bottom: 1rem !important;
+		color: #6c757d !important;
+		font-size: 0.95rem !important;
+		padding: 0 !important;
+		margin-top: 0 !important;
+	}
+
+	.destinos-section .location-icon {
+		font-size: 1rem !important;
+	}
+
+	.destinos-section .price {
+		font-size: 1.1rem !important;
+		font-weight: bold !important;
+		background: #f8f9fa !important;
+		padding: 0.75rem 1rem !important;
+		border-radius: 8px !important;
+		text-align: center !important;
+		margin-top: auto !important;
+		margin-bottom: 0 !important;
+	}
+
+	.destinos-section .price.nacional {
+		color: #27ae60 !important;
+	}
+
+	.destinos-section .price.internacional {
+		color: #1976d2 !important;
+	}
+}
+
+@media (max-width: 480px) {
+	.destinos-section .destino-card {
+		flex: 0 0 280px !important;
+		height: 400px !important;
+		border-radius: 16px !important;
+		box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+		margin: 0 8px !important;
+		padding: 0 !important;
+	}
+
+	.destinos-section .destino-card:hover {
+		transform: translateY(-6px) !important;
+		box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15) !important;
+	}
+
+	.destinos-section .card-image {
+		height: 160px !important;
+		border-radius: 16px 16px 0 0 !important;
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+
+	.destinos-section .card-title {
+		font-size: 1.2rem !important;
+		margin-bottom: 0.6rem !important;
+		line-height: 1.3 !important;
+		-webkit-line-clamp: 2;
+		display: -webkit-box !important;
+		-webkit-box-orient: vertical;
+		overflow: hidden !important;
+		font-weight: bold !important;
+		color: #2c3e50 !important;
+		margin-top: 0 !important;
+		padding: 0 !important;
+	}
+
+	.destinos-section .card-content {
+		padding: 1rem !important;
+		height: 240px !important;
+		display: flex !important;
+		flex-direction: column !important;
+		justify-content: space-between !important;
+		margin: 0 !important;
+	}
+
+	.destinos-section .card-info {
+		flex: 1 !important;
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+
+	.destinos-section .rating {
+		display: flex !important;
+		align-items: center !important;
+		gap: 0.4rem !important;
+		margin-bottom: 0.6rem !important;
+		padding: 0 !important;
+		margin-top: 0 !important;
+	}
+
+	.destinos-section .stars {
+		color: #ffc107 !important;
+		font-size: 0.9rem !important;
+	}
+
+	.destinos-section .rating-text {
+		font-size: 0.8rem !important;
+		color: #6c757d !important;
+	}
+
+	.destinos-section .location {
+		display: flex !important;
+		align-items: center !important;
+		gap: 0.4rem !important;
+		margin-bottom: 0.8rem !important;
+		color: #6c757d !important;
+		font-size: 0.9rem !important;
+		padding: 0 !important;
+		margin-top: 0 !important;
+	}
+
+	.destinos-section .location-icon {
+		font-size: 0.9rem !important;
+	}
+
+	.destinos-section .price {
+		font-size: 1rem !important;
+		font-weight: bold !important;
+		background: #f8f9fa !important;
+		padding: 0.6rem 0.8rem !important;
+		border-radius: 8px !important;
+		text-align: center !important;
+		margin-top: auto !important;
+		margin-bottom: 0 !important;
+	}
+
+	.destinos-section .price.nacional {
+		color: #27ae60 !important;
+	}
+
+	.destinos-section .price.internacional {
+		color: #1976d2 !important;
+	}
+}
