@@ -499,7 +499,7 @@ import { Image } from 'astro:assets';
 
 		.hero-content {
 			grid-template-columns: 1fr;
-			gap: 5rem;
+			gap: 3rem;
 			text-align: center;
 			min-height: auto;
 		}
@@ -507,10 +507,12 @@ import { Image } from 'astro:assets';
 		.text-content {
 			order: 2;
 			max-width: none;
+			margin-top: 1rem;
 		}
 
 		.mascot-section {
 			order: 1;
+			margin-bottom: 2rem;
 		}
 
 		.hero-title {
@@ -563,6 +565,10 @@ import { Image } from 'astro:assets';
 			padding-top: 100px;
 		}
 
+		.hero-content {
+			gap: 2rem;
+		}
+
 		.hero-title {
 			font-size: 2rem;
 		}
@@ -575,6 +581,14 @@ import { Image } from 'astro:assets';
 				width: 250px;
 				height: 250px;
 			}
+
+		.mascot-section {
+			margin-bottom: 1.5rem;
+		}
+
+		.text-content {
+			margin-top: 0.5rem;
+		}
 		}
 
 
