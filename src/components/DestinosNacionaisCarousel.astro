@@ -378,20 +378,30 @@ const destinosNacionais = allDestinos
 
 			this.isDragging = false;
 			this.startX = 0;
+			this.startY = 0;
 			this.startTranslate = 0;
 			this.currentTranslate = 0;
 			this.animationFrameId = null;
 			this.contentWidth = 0;
+			this.isScrolling = false;
 
+			// Bind methods
+			this.onTouchStart = this.onTouchStart.bind(this);
+			this.onTouchMove = this.onTouchMove.bind(this);
+			this.onTouchEnd = this.onTouchEnd.bind(this);
 			this.onPointerDown = this.onPointerDown.bind(this);
 			this.onPointerMove = this.onPointerMove.bind(this);
 			this.onPointerUp = this.onPointerUp.bind(this);
 			this.autoplay = this.autoplay.bind(this);
 			this.updatePosition = this.updatePosition.bind(this);
 
+			// Add event listeners for touch and pointer events
+			this.track.addEventListener('touchstart', this.onTouchStart, { passive: false });
+			this.track.addEventListener('touchmove', this.onTouchMove, { passive: false });
+			this.track.addEventListener('touchend', this.onTouchEnd);
+			this.track.addEventListener('pointerdown', this.onPointerDown);
 			document.addEventListener('pointermove', this.onPointerMove);
 			document.addEventListener('pointerup', this.onPointerUp);
-			this.track.addEventListener('pointerdown', this.onPointerDown);
 			
 			this.init();
 		}
@@ -418,7 +428,55 @@ const destinosNacionais = allDestinos
 			this.animationFrameId = requestAnimationFrame(this.autoplay);
 		}
 
+		// Touch events for mobile
+		onTouchStart(event) {
+			if (event.target.closest('a')) return;
+			this.isDragging = true;
+			this.isScrolling = false;
+			const touch = event.touches[0];
+			this.startX = touch.clientX;
+			this.startY = touch.clientY;
+
+			const transformMatrix = window.getComputedStyle(this.track).getPropertyValue('transform');
+			this.startTranslate = transformMatrix !== 'none' ? parseInt(transformMatrix.split(',')[4], 10) : 0;
+		}
+
+		onTouchMove(event) {
+			if (!this.isDragging) return;
+			
+			const touch = event.touches[0];
+			const deltaX = touch.clientX - this.startX;
+			const deltaY = touch.clientY - this.startY;
+
+			// Determine if user is scrolling vertically
+			if (!this.isScrolling) {
+				if (Math.abs(deltaY) > Math.abs(deltaX)) {
+					this.isScrolling = true;
+					this.isDragging = false;
+					return;
+				}
+			}
+
+			if (this.isScrolling) return;
+
+			event.preventDefault();
+			this.currentTranslate = this.startTranslate + deltaX;
+			this.updatePosition();
+		}
+
+		onTouchEnd() {
+			if (!this.isDragging || this.isScrolling) {
+				this.isDragging = false;
+				this.isScrolling = false;
+				return;
+			}
+			this.isDragging = false;
+			this.isScrolling = false;
+		}
+
+		// Pointer events for desktop
 		onPointerDown(event) {
+			if (event.pointerType === 'touch') return; // Let touch events handle mobile
 			if (event.target.closest('a')) return;
 			this.isDragging = true;
 			this.startX = event.pageX;
@@ -430,15 +488,15 @@ const destinosNacionais = allDestinos
 		}
 
 		onPointerMove(event) {
-			if (!this.isDragging) return;
+			if (!this.isDragging || event.pointerType === 'touch') return;
 			const currentX = event.pageX;
 			const deltaX = currentX - this.startX;
 			this.currentTranslate = this.startTranslate + deltaX;
 			this.updatePosition();
 		}
 
-		onPointerUp() {
-			if (!this.isDragging) return;
+		onPointerUp(event) {
+			if (!this.isDragging || event.pointerType === 'touch') return;
 			this.isDragging = false;
 			this.track.style.cursor = 'grab';
 		}
