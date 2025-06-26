@@ -1,1 +1,44 @@
 @import "tailwindcss";
+
+/* Reset CSS para remover margens laterais */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html, body {
+	width: 100%;
+	overflow-x: hidden;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: system-ui, sans-serif;
+	line-height: 1.6;
+}
+
+/* Garantir que containers não ultrapassem a largura da tela */
+.container {
+	max-width: 100%;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+/* Prevenir overflow horizontal em todos os elementos */
+* {
+	max-width: 100%;
+}
+
+/* Ajustes específicos para elementos que podem causar overflow */
+img, video, iframe {
+	max-width: 100%;
+	height: auto;
+}
+
+/* Garantir que seções não tenham margens laterais */
+section {
+	width: 100%;
+	max-width: 100%;
+}

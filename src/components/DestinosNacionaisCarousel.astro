@@ -131,8 +131,8 @@ const destinosNacionais = allDestinos
 
 	.carousel-track {
 		display: flex;
-		gap: 2rem;
-		animation: scroll 30s linear infinite;
+		gap: clamp(1rem, 3vw, 2rem);
+		animation: scroll 40s linear infinite;
 		width: fit-content;
 	}
 
@@ -163,15 +163,31 @@ const destinosNacionais = allDestinos
 </style>
 
 <script>
-	// Pausar animação quando o mouse estiver sobre o carousel
-	const track = document.getElementById('carousel-track-nacional');
-	if (track) {
-		track.addEventListener('mouseenter', () => {
-			track.style.animationPlayState = 'paused';
-		});
+	class Carousel {
+		constructor(element) {
+			this.track = element;
+			if (!this.track) return;
 
-		track.addEventListener('mouseleave', () => {
-			track.style.animationPlayState = 'running';
-		});
+			this.isDragging = false;
+
+			this.track.addEventListener('pointerdown', () => this.pause());
+			this.track.addEventListener('pointerup', () => this.play());
+			this.track.addEventListener('pointerleave', () => this.play());
+		}
+
+		pause() {
+			this.track.style.animationPlayState = 'paused';
+		}
+
+		play() {
+			if (!this.isDragging) {
+				this.track.style.animationPlayState = 'running';
+			}
+		}
 	}
+
+	document.addEventListener('astro:page-load', () => {
+		const track = document.getElementById('carousel-track-nacional');
+		new Carousel(track);
+	});
 </script>
