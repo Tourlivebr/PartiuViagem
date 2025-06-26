@@ -132,8 +132,17 @@ const destinosInternacionais = allDestinos
 	.carousel-track {
 		display: flex;
 		gap: clamp(1rem, 3vw, 2rem);
-		animation: scroll 45s linear infinite;
 		width: fit-content;
+	}
+
+	@media (min-width: 1024px) {
+		.carousel-track {
+			animation: scroll 45s linear infinite;
+		}
+
+		.carousel-track:hover {
+			animation-play-state: paused;
+		}
 	}
 
 	@keyframes scroll {
@@ -145,8 +154,11 @@ const destinosInternacionais = allDestinos
 		}
 	}
 
-	.carousel-track:hover {
-		animation-play-state: paused;
+	@media (max-width: 1023px) {
+		.carousel-track {
+			cursor: grab;
+			user-select: none; /* Prevent text selection */
+		}
 	}
 
 
@@ -166,28 +178,95 @@ const destinosInternacionais = allDestinos
 	class Carousel {
 		constructor(element) {
 			this.track = element;
-			if (!this.track) return;
+			if (!this.track || window.innerWidth >= 1024) return;
 
 			this.isDragging = false;
+			this.startX = 0;
+			this.startTranslate = 0;
+			this.currentTranslate = 0;
+			this.animationFrameId = null;
+			this.contentWidth = 0;
 
-			this.track.addEventListener('pointerdown', () => this.pause());
-			this.track.addEventListener('pointerup', () => this.play());
-			this.track.addEventListener('pointerleave', () => this.play());
+			this.onPointerDown = this.onPointerDown.bind(this);
+			this.onPointerMove = this.onPointerMove.bind(this);
+			this.onPointerUp = this.onPointerUp.bind(this);
+			this.autoplay = this.autoplay.bind(this);
+			this.updatePosition = this.updatePosition.bind(this);
+
+			document.addEventListener('pointermove', this.onPointerMove);
+			document.addEventListener('pointerup', this.onPointerUp);
+			this.track.addEventListener('pointerdown', this.onPointerDown);
+			
+			this.init();
 		}
 
-		pause() {
-			this.track.style.animationPlayState = 'paused';
+		init() {
+			this.contentWidth = this.track.scrollWidth / 2;
+			this.startAutoplay();
 		}
 
-		play() {
+		startAutoplay() {
+			this.stopAutoplay();
+			this.animationFrameId = requestAnimationFrame(this.autoplay);
+		}
+
+		stopAutoplay() {
+			cancelAnimationFrame(this.animationFrameId);
+		}
+
+		autoplay() {
 			if (!this.isDragging) {
-				this.track.style.animationPlayState = 'running';
+				this.currentTranslate -= 0.5;
+				this.updatePosition();
+			}
+			this.animationFrameId = requestAnimationFrame(this.autoplay);
+		}
+
+		onPointerDown(event) {
+			if (event.target.closest('a')) return;
+			this.isDragging = true;
+			this.startX = event.pageX;
+			this.track.style.cursor = 'grabbing';
+			event.preventDefault();
+
+			const transformMatrix = window.getComputedStyle(this.track).getPropertyValue('transform');
+			this.startTranslate = transformMatrix !== 'none' ? parseInt(transformMatrix.split(',')[4], 10) : 0;
+		}
+
+		onPointerMove(event) {
+			if (!this.isDragging) return;
+			const currentX = event.pageX;
+			const deltaX = currentX - this.startX;
+			this.currentTranslate = this.startTranslate + deltaX;
+			this.updatePosition();
+		}
+
+		onPointerUp() {
+			if (!this.isDragging) return;
+			this.isDragging = false;
+			this.track.style.cursor = 'grab';
+		}
+
+		updatePosition() {
+			this.track.style.transform = `translateX(${this.currentTranslate}px)`;
+			this.checkBoundary();
+		}
+
+		checkBoundary() {
+			if (this.currentTranslate <= -this.contentWidth) {
+				this.currentTranslate += this.contentWidth;
+				this.startTranslate += this.contentWidth;
+			} else if (this.currentTranslate > 0) {
+				this.currentTranslate -= this.contentWidth;
+				this.startTranslate -= this.contentWidth;
 			}
 		}
 	}
 
 	document.addEventListener('astro:page-load', () => {
 		const track = document.getElementById('carousel-track-internacional');
-		new Carousel(track);
+		if (track) {
+			new Carousel(track);
+		}
 	});
 </script>
