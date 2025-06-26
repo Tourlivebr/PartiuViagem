@@ -234,6 +234,8 @@ import { Image } from 'astro:assets';
 		align-items: center;
 		overflow: hidden;
 		padding-top: 100px; /* Account for fixed header */
+		-webkit-overflow-scrolling: touch;
+		touch-action: manipulation;
 	}
 
 	.hero-background {
@@ -563,14 +565,22 @@ import { Image } from 'astro:assets';
 	@media (max-width: 480px) {
 		.hero {
 			padding-top: 100px;
+			padding-bottom: 3rem;
 		}
 
 		.hero-content {
-			gap: 2rem;
+			gap: 1.5rem;
+			display: flex;
+			flex-direction: column;
 		}
 
 		.hero-title {
 			font-size: 2rem;
+			margin-bottom: 1rem;
+		}
+
+		.hero-description {
+			margin-bottom: 2rem;
 		}
 
 		.container {
@@ -580,16 +590,129 @@ import { Image } from 'astro:assets';
 		.mascot-container {
 				width: 250px;
 				height: 250px;
+				margin-bottom: 2rem;
 			}
+
+		.mascot-section {
+			margin-bottom: 2rem;
+			order: 1;
+		}
+
+		.text-content {
+			margin-top: 1rem;
+			order: 2;
+			padding-top: 1rem;
+		}
+		}
+
+	@media (max-width: 375px) {
+		.hero-content {
+			gap: 1rem;
+		}
+
+		.mascot-container {
+			width: 220px;
+			height: 220px;
+			margin-bottom: 1.5rem;
+		}
 
 		.mascot-section {
 			margin-bottom: 1.5rem;
 		}
 
 		.text-content {
-			margin-top: 0.5rem;
+			padding-top: 1.5rem;
+		}
+
+		.hero-title {
+			font-size: 1.8rem;
 		}
 		}
+
+	/* Media query para dispositivos em landscape ou com altura pequena */
+	@media (max-height: 600px) and (orientation: landscape) {
+		.hero {
+			padding-top: 80px;
+			padding-bottom: 2rem;
+			min-height: auto;
+		}
+
+		.hero-content {
+			gap: 1rem;
+			min-height: auto;
+		}
+
+		.mascot-container {
+			width: 200px;
+			height: 200px;
+		}
+
+		.hero-title {
+			font-size: 1.8rem;
+			margin-bottom: 0.5rem;
+		}
+
+		.hero-description {
+			margin-bottom: 1rem;
+			font-size: 1rem;
+		}
+	}
+
+	/* Media query específica para dispositivos móveis reais */
+	@media only screen and (max-device-width: 480px) {
+		.hero {
+			padding-top: 90px;
+			padding-bottom: 2rem;
+			min-height: 100vh;
+		}
+
+		.hero-content {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+			display: flex;
+			flex-direction: column;
+			text-align: center;
+			min-height: auto;
+			padding: 1rem 0;
+		}
+
+		.mascot-section {
+			order: 1;
+			margin-bottom: 2rem;
+			flex-shrink: 0;
+		}
+
+		.text-content {
+			order: 2;
+			max-width: none;
+			margin-top: 1rem;
+			padding-top: 1rem;
+			flex-shrink: 0;
+		}
+
+		.mascot-container {
+			width: 280px;
+			height: 280px;
+			margin: 0 auto 1.5rem auto;
+		}
+
+		.hero-title {
+			font-size: 2rem;
+			margin-bottom: 1rem;
+			line-height: 1.2;
+		}
+
+		.hero-description {
+			margin-bottom: 2rem;
+			font-size: 1rem;
+			line-height: 1.5;
+		}
+
+		.cta-button {
+			margin: 0 auto;
+			max-width: 280px;
+		}
+	}
 
 
 	</style>
