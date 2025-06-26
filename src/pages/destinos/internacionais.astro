@@ -26,7 +26,7 @@ const destinosInternacionais = destinos
 				
 				<div class="destinos-grid">
 					{destinosInternacionais.map((destino) => (
-						<a href={`/destinos/${destino.id}`} class="destino-card-link">
+						<a href={`/destinos/${destino.slug}`} class="destino-card-link">
 						<div class="destino-card">
 							<div class="card-image">
 								<img src={destino.data.featuredImage} alt={destino.data.title} />

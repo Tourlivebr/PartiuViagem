@@ -1,0 +1,37 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import DestinoLayout from '../../layouts/DestinoLayout.astro';
+import { render } from 'astro:content';
+
+export async function getStaticPaths() {
+	try {
+		const destinos = await getCollection('destinos');
+		console.log('Destinos loaded:', destinos.length);
+		
+		if (!destinos || destinos.length === 0) {
+			console.warn('No destinos found in collection');
+			return [];
+		}
+		
+		return destinos.map((destino) => {
+			console.log('Processing destino:', destino.slug, destino.data?.title);
+			return {
+				params: { slug: destino.slug },
+				props: destino,
+			};
+		});
+	} catch (error) {
+		console.error('Error in getStaticPaths:', error);
+		return [];
+	}
+}
+
+type Props = CollectionEntry<'destinos'>;
+
+const destino = Astro.props;
+const { Content } = await render(destino);
+---
+
+<DestinoLayout {...destino.data}>
+	<Content />
+</DestinoLayout>

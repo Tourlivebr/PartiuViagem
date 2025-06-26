@@ -1,24 +1,9 @@
-import { glob } from 'astro/loaders';
 import { defineCollection, z } from 'astro:content';
 
-const blog = defineCollection({
-	// Load Markdown and MDX files in the `src/content/blog/` directory.
-	loader: glob({ base: './src/content/blog', pattern: '**/*.{md,mdx}' }),
-	// Type-check frontmatter using a schema
-	schema: ({ image }) => z.object({
-		title: z.string(),
-		description: z.string(),
-		// Transform string to Date object
-		pubDate: z.coerce.date(),
-		updatedDate: z.coerce.date().optional(),
-		heroImage: image().optional(),
-	}),
-});
-
-// Nova collection para destinos
+// Nova collection para destinos usando API legacy
 const destinos = defineCollection({
-	loader: glob({ base: './src/content/destinos', pattern: '**/*.{md,mdx}' }),
-	schema: ({ image }) => z.object({
+	type: 'content',
+	schema: z.object({
 		title: z.string(),
 		description: z.string(),
 		location: z.string(),
@@ -27,11 +12,11 @@ const destinos = defineCollection({
 		currency: z.string().default('R$'),
 		rating: z.number().min(0).max(5),
 		reviewCount: z.number(),
-		featuredImage: image(),
-		galleryImages: z.array(image()).optional(),
+		featuredImage: z.string(),
+		galleryImages: z.array(z.string()).optional(),
 		isPromo: z.boolean().default(false),
 		order: z.number().optional(),
 	}),
 });
 
-export const collections = { blog, destinos };
+export const collections = { destinos };
