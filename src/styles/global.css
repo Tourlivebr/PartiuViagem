@@ -37,6 +37,17 @@ img, video, iframe {
 	height: auto;
 }
 
+.logo-image {
+	width: 80px;
+	height: 80px;
+	object-fit: contain;
+}
+
+.footer .logo-image {
+	width: 100px;
+	height: 100px;
+}
+
 /* Garantir que seções não tenham margens laterais */
 section {
 	width: 100%;
