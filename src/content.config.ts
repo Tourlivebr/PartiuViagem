@@ -16,6 +16,7 @@ const destinos = defineCollection({
 		galleryImages: z.array(z.string()).optional(),
 		isPromo: z.boolean().default(false),
 		order: z.number().optional(),
+		tripDates: z.array(z.string()),
 	}),
 });
 

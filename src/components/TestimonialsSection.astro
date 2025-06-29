@@ -10,11 +10,6 @@ export interface Props {
 		comment: string;
 		avatar: string;
 	}[];
-	partnerLogos?: {
-		name: string;
-		logo: string;
-		alt: string;
-	}[];
 	backgroundColor?: string;
 	textColor?: string;
 	containerMaxWidth?: string;
@@ -22,37 +17,47 @@ export interface Props {
 
 const {
 	title = "Recomendados por mais de 5.000 clientes!",
-	subtitle = "",
-	description = "Lorem ipsum dolor sit amet consectetur. Aliquet malesuada tellus viverra ultricies egestas sociis gravida sem. Enim elit massa ullamcorper erat.",
+	subtitle = "Mais do que números, são histórias de confiança, experiências incríveis e momentos inesquecíveis.",
+	description = "<ul style='list-style: none; padding: 0; margin: 0;'><li><span style='color: var(--brand-color); margin-right: 8px;'>◆</span>Depoimentos reais</li><li><span style='color: var(--brand-color); margin-right: 8px;'>◆</span>Avaliações com nota máxima</li><li><span style='color: var(--brand-color); margin-right: 8px;'>◆</span>Clientes que se tornam fãs</li><li><span style='color: var(--brand-color); margin-right: 8px;'>◆</span>Explore os depoimentos e descubra por que somos a escolha certa para sua jornada.</li></ul>",
+
 	testimonials = [
 		{
-			name: "João Silva",
-			location: "NOVA YORK",
+			name: "Cármen Stumpf",
+			location: "Cliente Vip",
 			rating: 5,
-			comment: "Lorem ipsum dolor sit amet consectetur. Aliquet malesuada tellus viverra ultricies egestas sociis gravida sem. Enim elit massa ullamcorper erat.",
-			avatar: "/api/placeholder/60/60"
+			comment: "Já fiz 4 passeios com eles e pretendo fazer muito mais. Incansáveis e organizados, roteiros que privilegiam os principais pontos do lugar. Parabéns!",
+			avatar: "/assets/DepCarmem.jpg"
 		},
 		{
-			name: "Maria Santos",
-			location: "PARIS",
+			name: "Lívia Rael",
+			location: "Cliente Vip",
 			rating: 5,
-			comment: "Experiência incrível! A viagem superou todas as expectativas. Atendimento excepcional e destinos maravilhosos.",
-			avatar: "/api/placeholder/60/60"
+			comment: "Empresa muito prestativa, roteiro excelente aproveitando cada oportunidade para conhecermos ao máximo o destino! Guias e motoristas muito queridos! Foi incrível a nossa viagem ao Uruguai, Show!!!",
+			avatar: "/assets/DepLiviaRael.jpg"
 		},
 		{
-			name: "Pedro Costa",
-			location: "TÓQUIO",
+			name: "Simone Zotti",
+			location: "Cliente Vip",
 			rating: 5,
-			comment: "Organização perfeita, guias experientes e momentos inesquecíveis. Recomendo para todos que buscam aventura.",
-			avatar: "/api/placeholder/60/60"
+			comment: "Excelentes experiências, conhecendo novos lugares, pessoas incríveis que vão com certeza ficar guardadas no meu coração ❤ criando memórias e vivendo momentos que não tem preço.",
+			avatar: "/assets/DepSimoniZotti.jpg"
+		},
+		{
+			name: "Franciele Colissi",
+			location: "Cliente Vip",
+			rating: 5,
+			comment: "Simplesmente excelente! Rodrigo deixa as viagens leves e organizadas. Super indico.",
+			avatar: "/assets/DepFranciele.jpg"
+		},
+		{
+			name: "Ivanete Perotto",
+			location: "Cliente Vip",
+			rating: 5,
+			comment: "Foi minha primeira viagem com esta operadora. Só gratidão pelo carinho, cuidado, atenção e compromisso conosco. Parabéns equipe, sintonia total.",
+			avatar: "/assets/DepIvanete.jpg"
 		}
 	],
-	partnerLogos = [
-		{ name: "TripAdvisor", logo: "/api/placeholder/120/40", alt: "TripAdvisor" },
-		{ name: "Expedia", logo: "/api/placeholder/120/40", alt: "Expedia" },
-		{ name: "Booking.com", logo: "/api/placeholder/120/40", alt: "Booking.com" },
-		{ name: "Airbnb", logo: "/api/placeholder/120/40", alt: "Airbnb" }
-	],
+
 	backgroundColor = "#f8fafc",
 	textColor = "#1f2937",
 	containerMaxWidth = "1200px"
@@ -64,9 +69,9 @@ const {
 		<div class="content-wrapper">
 			<!-- Seção de Título -->
 			<div class="title-section">
-				{subtitle && <p class="subtitle">{subtitle}</p>}
 				<h2 class="main-title">{title}</h2>
-				{description && <p class="description">{description}</p>}
+				{subtitle && <p class="subtitle">{subtitle}</p>}
+				{description && <p class="description" set:html={description} />}
 			</div>
 
 			<!-- Seção de Depoimentos -->
@@ -120,18 +125,7 @@ const {
 			</div>
 		</div>
 
-		<!-- Seção de Parceiros -->
-		{partnerLogos && partnerLogos.length > 0 && (
-			<div class="partners-section">
-				<div class="partners-grid">
-					{partnerLogos.map((partner) => (
-						<div class="partner-logo">
-							<img src={partner.logo} alt={partner.alt} />
-						</div>
-					))}
-				</div>
-			</div>
-		)}
+
 	</div>
 </section>
 
@@ -163,7 +157,7 @@ const {
 		display: grid;
 		grid-template-columns: 1fr;
 		gap: 2rem;
-		align-items: center;
+		align-items: start;
 		margin-bottom: clamp(2rem, 5vw, 4rem);
 		text-align: center;
 	}
@@ -192,10 +186,22 @@ const {
 
 	.description {
 		font-size: clamp(0.95rem, 2vw, 1.1rem);
-		line-height: 1.6;
+		line-height: 1.8;
 		color: var(--text-light);
-		margin: 0 auto;
-		max-width: 90%;
+		margin: 1rem auto;
+		max-width: 100%;
+		font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+		display: block;
+		text-align: left;
+		padding: 0 1rem;
+	}
+
+	.description li {
+		margin-bottom: 1rem;
+		display: flex;
+		align-items: flex-start;
+		line-height: 1.4;
+		text-align: left;
 	}
 
 	.testimonials-section-content {
@@ -303,8 +309,8 @@ const {
 	}
 
 	.avatar {
-		width: 50px;
-		height: 50px;
+		width: 70px;
+		height: 70px;
 		border-radius: 50%;
 		object-fit: cover;
 		border: 3px solid var(--brand-color);
@@ -349,40 +355,7 @@ const {
 		cursor: not-allowed;
 	}
 
-	.partners-section {
-		border-top: 1px solid var(--border-color);
-		padding-top: clamp(2rem, 5vw, 3rem);
-		margin-top: clamp(2rem, 5vw, 3rem);
-	}
 
-	.partners-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-		gap: 2rem;
-		align-items: center;
-		justify-items: center;
-	}
-
-	.partner-logo {
-		opacity: 0.6;
-		transition: opacity 0.3s ease;
-	}
-
-	.partner-logo:hover {
-		opacity: 1;
-	}
-
-	.partner-logo img {
-		max-height: 40px;
-		max-width: 120px;
-		object-fit: contain;
-		filter: grayscale(100%);
-		transition: filter 0.3s ease;
-	}
-
-	.partner-logo:hover img {
-		filter: grayscale(0%);
-	}
 
 	@media (min-width: 769px) {
 		.content-wrapper {

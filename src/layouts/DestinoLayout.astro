@@ -7,7 +7,7 @@ import { Image } from 'astro:assets';
 
 type Props = CollectionEntry<'destinos'>['data'];
 
-const { title, description, location, country, price, currency, rating, reviewCount, featuredImage, galleryImages } = Astro.props;
+const { title, description, location, country, price, currency, rating, reviewCount, featuredImage, galleryImages, tripDates } = Astro.props;
 ---
 
 <html lang="pt-BR">
@@ -34,19 +34,22 @@ const { title, description, location, country, price, currency, rating, reviewCo
 						height={600}
 						class="hero-image"
 					/>
-					<div class="hero-content">
-						<h1>{title}</h1>
-						<div class="location-info">
-							<span>📍 {location}, {country}</span>
-						</div>
-						<div class="rating">
-							<span class="stars">{'★'.repeat(Math.floor(rating))}</span>
-							<span>{rating} ({reviewCount} avaliações)</span>
-						</div>
-						<div class="price-info">
-							<span class="price">{currency} {price.toLocaleString('pt-BR')}</span>
-						</div>
-
+				</div>
+				<div class="destino-info">
+					<h1>{title}</h1>
+					<div class="trip-dates">
+						<span class="calendar-icon">📅</span>
+						<span>{tripDates[0]}</span>
+					</div>
+					<div class="location-info">
+						<span>📍 {location}, {country}</span>
+					</div>
+					<div class="rating">
+						<span class="stars">{'★'.repeat(Math.floor(rating))}</span>
+						<span>{rating} ({reviewCount} avaliações)</span>
+					</div>
+					<div class="price-info">
+						<span class="price">{currency} {price.toLocaleString('pt-BR')}</span>
 					</div>
 				</div>
 
@@ -95,9 +98,113 @@ const { title, description, location, country, price, currency, rating, reviewCo
 		font-family: system-ui, sans-serif;
 	}
 
+	.content-section {
+		max-width: 800px;
+		margin: 2rem auto;
+		padding: 0 1rem;
+		color: #1a1a1a;
+	}
+
+	.content-section h2 {
+		font-size: 1.75rem;
+		font-weight: 600;
+		color: #0f172a;
+		margin: 2rem 0 1rem;
+		padding-bottom: 0.5rem;
+		border-bottom: 2px solid #e2e8f0;
+	}
+
+	.content-section h3 {
+		font-size: 1.25rem;
+		font-weight: 600;
+		color: #1e293b;
+		margin: 1.5rem 0 0.75rem;
+	}
+
+	.content-section p {
+		margin: 1rem 0;
+		line-height: 1.8;
+		color: #334155;
+	}
+
+	.content-section ul {
+		list-style-type: none;
+		padding-left: 1rem;
+		margin: 1rem 0;
+	}
+
+	.content-section ul li {
+		position: relative;
+		padding-left: 1.5rem;
+		margin-bottom: 0.75rem;
+		color: #334155;
+	}
+
+	.content-section ul li::before {
+		content: "•";
+		position: absolute;
+		left: 0;
+		color: #0ea5e9;
+		font-weight: bold;
+	}
+
+	.hero-section {
+		width: 100%;
+		height: auto;
+		position: relative;
+	}
+
+	.hero-image {
+		width: 100%;
+		height: auto;
+		object-fit: cover;
+	}
+
+	.destino-info {
+		max-width: 1200px;
+		margin: 2rem auto;
+		padding: 0 1rem;
+	}
+
+	.destino-info h1 {
+		font-size: 2.5rem;
+		margin-bottom: 1rem;
+		color: #1a1a1a;
+	}
+
+	.trip-dates, .location-info, .rating, .price-info {
+		margin-bottom: 1rem;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: #4a5568;
+	}
+
+	.stars {
+		color: #f59e0b;
+	}
+
+	.price {
+		font-size: 1.5rem;
+		font-weight: bold;
+		color: #10b981;
+	}
+
 	main {
 		padding-top: 120px; /* Compensar altura do header fixo + espaçamento extra */
 		min-height: calc(100vh - 120px);
+	}
+
+	.trip-dates {
+		margin-top: 0.5rem;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: #000000;
+	}
+
+	.trip-dates .calendar-icon {
+		font-size: 1.1rem;
 	}
 
 	.back-button-container {

@@ -20,10 +20,20 @@ const destinosNacionais = allDestinos
 						<div class="destino-card">
 							<a href={`/destinos/${destino.slug}`}>
 								<div class="card-image">
-									<Image src={destino.data.featuredImage} alt={destino.data.title} width={400} height={400} format="avif" quality={80} />
-									<div class="promo-badge">PROMO</div>
-								</div>
-								<div class="card-content">
+								<Image src={destino.data.featuredImage} alt={destino.data.title} width={400} height={400} format="avif" quality={80} />
+							</div>
+							<div class="card-content">
+								{destino.data.isPromo && <div class="promo-badge">PROMO</div>}
+									<h3 class="card-title">{destino.data.title}</h3>
+									<div class="location">
+										<span class="location-icon">📍</span>
+										<span>{destino.data.location}</span>
+									</div>
+									<div class="description">{destino.data.description}</div>
+									<div class="trip-dates">
+										<span class="calendar-icon">📅</span>
+										<span>{destino.data.tripDates[0]}</span>
+									</div>
 									<div class="rating">
 										<div class="stars">
 											{Array.from({ length: 5 }, (_, i) => (
@@ -32,12 +42,8 @@ const destinosNacionais = allDestinos
 										</div>
 										<span class="rating-text">{destino.data.rating} ({destino.data.reviewCount} Reviews)</span>
 									</div>
-									<h3 class="card-title">{destino.data.title}</h3>
-									<div class="location">
-										<span class="location-icon">📍</span>
-										<span>{destino.data.location}</span>
-									</div>
 									<div class="price">{destino.data.currency} {destino.data.price.toLocaleString('pt-BR')}</div>
+                                    </div>
 								</div>
 							</a>
 						</div>

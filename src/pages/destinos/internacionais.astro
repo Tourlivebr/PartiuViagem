@@ -36,6 +36,10 @@ const destinosInternacionais = destinos
 								<h3>{destino.data.title}</h3>
 								<p class="location">{destino.data.location} - {destino.data.country}</p>
 								<p class="description">{destino.data.description}</p>
+								<div class="trip-dates">
+									<span class="calendar-icon">📅</span>
+									<span>{destino.data.tripDates[0]}</span>
+								</div>
 								<div class="card-footer">
 									<div class="rating">
 										<span class="stars">{'★'.repeat(Math.floor(destino.data.rating))}</span>
