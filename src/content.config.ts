@@ -1,6 +1,5 @@
 import { defineCollection, z } from 'astro:content';
 
-// Nova collection para destinos usando API legacy
 const destinos = defineCollection({
 	type: 'content',
 	schema: z.object({

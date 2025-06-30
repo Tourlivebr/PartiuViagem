@@ -64,6 +64,11 @@ section {
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.swiper-nacional .swiper-slide,
+.swiper-internacional .swiper-slide {
+	padding: 1rem;
+}
+
 .card-image {
 	position: relative;
 	width: 100%;
