@@ -9,7 +9,7 @@ let Content;
 try {
 	destino = await getEntry('destinos', slug);
 	if (!destino) {
-		throw new Error('Destino not found');
+		return Astro.redirect('/404');
 	}
 	const rendered = await destino.render();
 	Content = rendered.Content;
@@ -21,3 +21,4 @@ try {
 
 <DestinoLayout {...destino.data}>
 	<Content />
+</DestinoLayout>
