@@ -11,8 +11,8 @@ export interface Props {
 }
 
 const {
-	title = "Cadastre-se e receba",
-	subtitle = "nossa programação atualizada de passeios!",
+	title = "Cadastre-se e receba nossa",
+	subtitle = "programação atualizada de passeios!",
 	description = "Fique por dentro das próximas saídas, ofertas especiais e novidades exclusivas. Tudo isso direto no seu e-mail, de forma prática e sem spam. Vamos juntos explorar novos destinos!",
 	placeholder = "Digite aqui seu e-mail",
 	buttonText = "Eu Quero!",
@@ -25,7 +25,6 @@ const {
 <section class="newsletter-section" style={`background: ${backgroundColor}; color: ${textColor};`}>
 	<div class="container" style={`max-width: ${containerMaxWidth};`}>
 		<div class="newsletter-content">
-			<!-- Mascote Element -->
 			<div class="mascote-element">
 				<img 
 					src="/assets/mascChamando.png" 
@@ -36,7 +35,6 @@ const {
 				/>
 			</div>
 
-			<!-- Main Content -->
 			<div class="main-content">
 				<div class="text-content">
 					<h2 class="newsletter-title">
@@ -89,15 +87,6 @@ const {
 		justify-content: space-between;
 		position: relative;
 		min-height: 300px;
-	}
-
-	.decorative-element {
-		position: absolute;
-		left: -50px;
-		top: 50%;
-		transform: translateY(-50%);
-		z-index: 1;
-		opacity: 0.8;
 	}
 
 	.main-content {
@@ -153,12 +142,6 @@ const {
 		border-radius: 50px;
 		padding: 8px;
 		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-		transition: all 0.3s ease;
-	}
-
-	.input-group:focus-within {
-		box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-		transform: translateY(-2px);
 	}
 
 	.email-input {
@@ -185,21 +168,10 @@ const {
 		font-weight: 600;
 		font-size: 1rem;
 		cursor: pointer;
-		transition: all 0.3s ease;
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
 		white-space: nowrap;
-	}
-
-	.submit-btn:hover {
-		background: linear-gradient(135deg, #059669 0%, #047857 100%);
-		transform: translateY(-1px);
-		box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
-	}
-
-	.submit-btn:active {
-		transform: translateY(0);
 	}
 
 	.form-message {
@@ -208,29 +180,22 @@ const {
 		border-radius: 8px;
 		font-size: 0.9rem;
 		text-align: center;
-		transition: all 0.3s ease;
-		opacity: 0;
-		transform: translateY(-10px);
 	}
 
-	.form-message.show {
-		opacity: 1;
-		transform: translateY(0);
+	.mascote-element {
+		position: relative;
+		z-index: 2;
+		flex: 0 0 300px;
+		margin-right: 2rem;
 	}
 
-	.form-message.success {
-		background: rgba(16, 185, 129, 0.2);
-		color: #10b981;
-		border: 1px solid rgba(16, 185, 129, 0.3);
+	.mascote-image {
+		width: 300px;
+		height: auto;
+		object-fit: contain;
+		filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
 	}
 
-	.form-message.error {
-		background: rgba(239, 68, 68, 0.2);
-		color: #ef4444;
-		border: 1px solid rgba(239, 68, 68, 0.3);
-	}
-
-	/* Tablet responsiveness */
 	@media (max-width: 1024px) {
 		.main-content {
 			gap: 2rem;
@@ -241,7 +206,6 @@ const {
 		}
 	}
 
-	/* Mobile responsiveness */
 	@media (max-width: 768px) {
 		.newsletter-section {
 			padding: 3rem 0;
@@ -254,10 +218,6 @@ const {
 		.newsletter-content {
 			min-height: auto;
 			padding: 1rem 0;
-		}
-
-		.decorative-element {
-			display: none;
 		}
 
 		.main-content {
@@ -279,7 +239,6 @@ const {
 
 		.newsletter-description {
 			font-size: 1rem;
-			margin-bottom: 0;
 		}
 
 		.newsletter-form {
@@ -292,13 +251,11 @@ const {
 			gap: 0.75rem;
 			padding: 1rem;
 			border-radius: 20px;
-			box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 		}
 
 		.email-input {
 			border-radius: 15px;
 			padding: 1.2rem 1rem;
-			font-size: 1rem;
 			width: 100%;
 			box-sizing: border-box;
 		}
@@ -308,103 +265,10 @@ const {
 			justify-content: center;
 			width: 100%;
 			padding: 1.2rem 2rem;
-			font-size: 1rem;
-			min-height: 50px;
-			touch-action: manipulation;
-		}
-
-		.form-message {
-			margin-top: 1.5rem;
-			padding: 1rem;
-			font-size: 0.95rem;
-		}
-	}
-
-	/* Small mobile devices */
-	@media (max-width: 480px) {
-		.newsletter-section {
-			padding: 2.5rem 0;
-		}
-
-		.container {
-			padding: 0 0.75rem;
-		}
-
-		.newsletter-title {
-			font-size: 1.75rem;
-			line-height: 1.1;
-		}
-
-		.newsletter-description {
-			font-size: 0.95rem;
-			line-height: 1.5;
-		}
-
-		.input-group {
-			padding: 0.75rem;
-		}
-
-		.email-input {
-			padding: 1rem 0.75rem;
-			font-size: 0.95rem;
-		}
-
-		.submit-btn {
-			padding: 1rem 1.5rem;
-			font-size: 0.95rem;
 			min-height: 48px;
 		}
-	}
 
-	/* Touch device optimizations */
-	@media (hover: none) and (pointer: coarse) {
-		.submit-btn {
-			min-height: 48px;
-			touch-action: manipulation;
-		}
-
-		.email-input {
-			min-height: 48px;
-			font-size: 16px; /* Prevents zoom on iOS */
-		}
-
-		.input-group:focus-within {
-			transform: none; /* Remove transform on i touch devices */
-		}
-	}
-
-	/* Mascote styles */
-	.mascote-element {
-		position: relative;
-		left: 0;
-		top: 0;
-		transform: none;
-		z-index: 2;
-		flex: 0 0 300px;
-		margin-right: 2rem;
-	}
-
-	.mascote-image {
-		width: 300px;
-		height: auto;
-		object-fit: contain;
-		filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15));
-		transform-origin: center center;
-		animation: float 6s ease-in-out infinite;
-	}
-
-	@keyframes float {
-		0%, 100% { transform: translateY(0); }
-		50% { transform: translateY(-15px); }
-	}
-
-	/* Mobile responsiveness for mascote */
-	@media (max-width: 768px) {
 		.mascote-element {
-			position: relative;
-			left: auto;
-			top: auto;
-			transform: none;
 			margin: 0 auto 2rem;
 			text-align: center;
 			flex: 0 0 200px;
@@ -425,50 +289,24 @@ const {
 			this.messageDiv = document.getElementById('formMessage');
 
 			if (this.form) {
-				this.init();
+				this.form.addEventListener('submit', (e) => this.handleSubmit(e));
 			}
 		}
 
-		init() {
-			this.form.addEventListener('submit', (e) => this.handleSubmit(e));
-		}
-
-		isValidEmail(email) {
-			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-			return emailRegex.test(email);
-		}
-
-		async handleSubmit(e) {
+		handleSubmit(e) {
 			e.preventDefault();
-			
 			const email = this.emailInput.value.trim();
 			
-			if (!this.isValidEmail(email)) {
-				this.showMessage('Por favor, insira um e-mail válido.', 'error');
+			if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+				this.messageDiv.textContent = 'Por favor, insira um e-mail válido.';
+				this.messageDiv.className = 'form-message error';
 				return;
 			}
 
-			this.showMessage('Processando...', 'info');
-			
-			try {
-				// Simular envio (aqui você integraria com sua API)
-				await new Promise(resolve => setTimeout(resolve, 1500));
-				
-				this.showMessage('Obrigado! Você foi inscrito com sucesso em nossa newsletter.', 'success');
-				this.emailInput.value = '';
-				
-			} catch (error) {
-				this.showMessage('Erro ao processar inscrição. Tente novamente.', 'error');
-			}
-		}
-
-		showMessage(message, type) {
-			this.messageDiv.textContent = message;
-			this.messageDiv.className = `form-message ${type} show`;
-			
-			setTimeout(() => {
-				this.messageDiv.classList.remove('show');
-			}, 5000);
+			// Aqui você pode adicionar a lógica de envio do e-mail
+			this.messageDiv.textContent = 'E-mail cadastrado com sucesso!';
+			this.messageDiv.className = 'form-message success';
+			this.emailInput.value = '';
 		}
 	}
 
