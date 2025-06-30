@@ -3,22 +3,21 @@ import { type CollectionEntry, getEntry } from 'astro:content';
 import DestinoLayout from '../../layouts/DestinoLayout.astro';
 
 const { slug } = Astro.params;
-let destino;
-let Content;
 
 try {
-	destino = await getEntry('destinos', slug);
-	if (!destino) {
-		return Astro.redirect('/404');
-	}
-	const rendered = await destino.render();
-	Content = rendered.Content;
+    const destino = await getEntry('destinos', slug);
+    if (!destino) {
+        throw new Error('Destino não encontrado');
+    }
+    
+    const { Content } = await destino.render();
+    
+    return (
+        <DestinoLayout {...destino.data}>
+            <Content />
+        </DestinoLayout>
+    );
 } catch (error) {
-	console.error('Error loading destino:', error);
-	return Astro.redirect('/404');
+    return Astro.redirect('/404');
 }
 ---
-
-<DestinoLayout {...destino.data}>
-	<Content />
-</DestinoLayout>
