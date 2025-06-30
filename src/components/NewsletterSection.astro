@@ -180,8 +180,22 @@ const {
 		border-radius: 8px;
 		font-size: 0.9rem;
 		text-align: center;
+		display: none;
 	}
 
+	.form-message.error {
+		display: block;
+		background: rgba(239, 68, 68, 0.2);
+		color: #ef4444;
+		border: 1px solid rgba(239, 68, 68, 0.3);
+	}
+
+	.form-message.success {
+		display: block;
+		background: rgba(16, 185, 129, 0.2);
+		color: #10b981;
+		border: 1px solid rgba(16, 185, 129, 0.3);
+	}
 	.mascote-element {
 		position: relative;
 		z-index: 2;
@@ -280,37 +294,25 @@ const {
 		}
 	}
 </style>
-
 <script>
-	class NewsletterForm {
-		constructor() {
-			this.form = document.getElementById('newsletterForm');
-			this.emailInput = document.getElementById('emailInput');
-			this.messageDiv = document.getElementById('formMessage');
+    const form = document.getElementById('newsletterForm');
+    const emailInput = document.getElementById('emailInput');
+    const messageDiv = document.getElementById('formMessage');
 
-			if (this.form) {
-				this.form.addEventListener('submit', (e) => this.handleSubmit(e));
-			}
-		}
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = emailInput.value.trim();
+            
+            if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                messageDiv.textContent = 'Por favor, insira um e-mail válido.';
+                messageDiv.className = 'form-message error';
+                return;
+            }
 
-		handleSubmit(e) {
-			e.preventDefault();
-			const email = this.emailInput.value.trim();
-			
-			if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-				this.messageDiv.textContent = 'Por favor, insira um e-mail válido.';
-				this.messageDiv.className = 'form-message error';
-				return;
-			}
-
-			// Aqui você pode adicionar a lógica de envio do e-mail
-			this.messageDiv.textContent = 'E-mail cadastrado com sucesso!';
-			this.messageDiv.className = 'form-message success';
-			this.emailInput.value = '';
-		}
-	}
-
-	document.addEventListener('DOMContentLoaded', () => {
-		new NewsletterForm();
-	});
+            messageDiv.textContent = 'E-mail cadastrado com sucesso!';
+            messageDiv.className = 'form-message success';
+            emailInput.value = '';
+        });
+    }
 </script>
