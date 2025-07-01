@@ -4,7 +4,6 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { Image } from 'astro:assets';
-import { getImage } from 'astro:assets';
 
 type Props = CollectionEntry<'destinos'>['data'];
 
@@ -28,21 +27,20 @@ const { title, description, location, country, price, currency, rating, reviewCo
 			</div>
 			<article class="destino-detail">
 				<div class="hero-section">
-					<img 
+					<Image 
 						src={featuredImage} 
 						alt={title}
-						width="1200"
-						height="600"
+						width={1200}
+						height={600}
 						class="hero-image"
-						style="object-fit: cover;"
 					/>
 				</div>
 				<div class="destino-info">
 					<h1>{title}</h1>
 					<div class="trip-dates">
-					<span class="calendar-icon">📅</span>
-					<span>{tripDates && tripDates.length > 0 ? tripDates[0] : 'Data a definir'}</span>
-				</div>
+						<span class="calendar-icon">📅</span>
+						<span>{tripDates[0]}</span>
+					</div>
 					<div class="location-info">
 						<span>📍 {location}, {country}</span>
 					</div>
@@ -51,7 +49,7 @@ const { title, description, location, country, price, currency, rating, reviewCo
 						<span>{rating} ({reviewCount} avaliações)</span>
 					</div>
 					<div class="price-info">
-						<span class="price">{currency} {price ? price.toLocaleString('pt-BR') : '0,00'}</span>
+						<span class="price">{currency} {price.toLocaleString('pt-BR')}</span>
 					</div>
 				</div>
 
@@ -76,14 +74,14 @@ const { title, description, location, country, price, currency, rating, reviewCo
 						<h2>Galeria</h2>
 						<div class="gallery-grid">
 							{galleryImages.map((image) => (
-							<img 
-								src={image} 
-								alt={title}
-								width="400"
-								height="300"
-								class="gallery-image"
-							/>
-						))}
+								<Image 
+									src={image} 
+									alt={title}
+									width={400}
+									height={300}
+									class="gallery-image"
+								/>
+							))}
 						</div>
 					</div>
 				)}
