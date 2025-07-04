@@ -4,28 +4,46 @@
 
 <header class="header">
 	<div class="container">
-		<div class="logo">
-			<a href="/">
-				<img src="/assets/logo_partiu_Viagem.png" alt="Partiu Viagem Logo" class="logo-image" />
-			</a>
+		<div class="left-section">
+			<div class="logo">
+				<a href="/">
+					<img src="/assets/logo_partiu_Viagem.png" alt="Partiu Viagem Logo" class="logo-image" />
+				</a>
+			</div>
 		</div>
-		
-		<nav class="navigation">
-			<ul class="nav-list">
-				<li><a href="/" class="nav-link">INÍCIO</a></li>
-				<li class="dropdown">
-					<span class="nav-link dropdown-toggle">DESTINOS</span>
-					<ul class="dropdown-menu">
-						<li><a href="/destinos/nacionais" class="dropdown-link">Nacionais</a></li>
-						<li><a href="/destinos/internacionais" class="dropdown-link">Internacionais</a></li>
-					</ul>
-				</li>
 
-				<li><a href="/#testimonials" class="nav-link">DEPOIMENTOS</a></li>
-				<li><a href="/contato" class="nav-link">CONTATO</a></li>
-			</ul>
-		</nav>
-		
+		<div class="center-section">
+			<nav class="navigation">
+				<ul class="nav-list">
+					<li><a href="/" class="nav-link">INÍCIO</a></li>
+					<li class="dropdown">
+						<span class="nav-link dropdown-toggle">DESTINOS</span>
+						<ul class="dropdown-menu">
+							<li><a href="/destinos/nacionais" class="dropdown-link">Nacionais</a></li>
+							<li><a href="/destinos/internacionais" class="dropdown-link">Internacionais</a></li>
+						</ul>
+					</li>
+					<li><a href="/#testimonials" class="nav-link">DEPOIMENTOS</a></li>
+					<li><a href="/contato" class="nav-link">CONTATO</a></li>
+				</ul>
+			</nav>
+		</div>
+
+		<div class="right-section">
+			<div class="search-container">
+				<div class="search-input-wrapper">
+					<input type="text" id="search-input" placeholder="Buscar destinos..." class="search-input" />
+					<button class="search-button" aria-label="Buscar">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<circle cx="11" cy="11" r="8"></circle>
+							<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+						</svg>
+					</button>
+				</div>
+				<div id="search-results" class="search-results"></div>
+			</div>
+		</div>
+
 		<!-- Hamburger Menu Button -->
 		<button class="hamburger-menu" id="hamburger-menu" aria-label="Menu">
 			<span class="hamburger-line"></span>
@@ -540,4 +558,251 @@
 			}
 		});
 	});
+</script>
+
+
+<style>
+	.search-container {
+		position: relative;
+		width: 100%;
+		max-width: 300px;
+	}
+
+	.search-input-wrapper {
+		display: flex;
+		align-items: center;
+		background: rgba(255, 255, 255, 0.9);
+		border-radius: 24px;
+		padding: 4px 8px;
+		border: 1px solid rgba(0, 0, 0, 0.1);
+		transition: all 0.3s ease;
+	}
+
+	.search-input-wrapper:focus-within {
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		border-color: #3b82f6;
+	}
+
+	.search-input {
+		flex: 1;
+		padding: 8px 12px;
+		border: none;
+		background: transparent;
+		font-size: 0.95rem;
+		color: #1e293b;
+		outline: none;
+	}
+
+	.search-button {
+		padding: 8px;
+		background: #3b82f6;
+		border: none;
+		border-radius: 50%;
+		color: white;
+		cursor: pointer;
+		transition: all 0.3s ease;
+	}
+
+	.search-button:hover {
+		background: #2563eb;
+		transform: scale(1.05);
+	}
+
+	.search-results {
+		position: absolute;
+		top: calc(100% + 8px);
+		left: 0;
+		right: 0;
+		background: white;
+		border-radius: 12px;
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+		max-height: 0;
+		overflow: hidden;
+		transition: all 0.3s ease;
+		z-index: 1000;
+	}
+
+	.search-results.active {
+		max-height: 400px;
+		overflow-y: auto;
+		padding: 8px;
+	}
+
+	.search-result-item {
+		display: flex;
+		align-items: center;
+		padding: 12px;
+		border-radius: 8px;
+		transition: all 0.3s ease;
+		cursor: pointer;
+		margin-bottom: 4px;
+	}
+
+	.search-result-item:hover {
+		background: #f8fafc;
+		transform: translateX(4px);
+	}
+
+	.search-result-content {
+		flex: 1;
+	}
+
+	.search-result-title {
+		font-weight: 600;
+		color: #1e293b;
+		margin-bottom: 4px;
+	}
+
+	.search-result-location {
+		font-size: 0.85rem;
+		color: #64748b;
+	}
+
+	.search-result-price {
+		font-weight: 600;
+		color: #3b82f6;
+		font-size: 1.1rem;
+		margin-left: 12px;
+	}
+
+	@media (max-width: 768px) {
+		.search-container {
+			max-width: 100%;
+			margin-top: 12px;
+		}
+
+		.search-input-wrapper {
+			padding: 6px;
+		}
+
+		.search-input {
+			font-size: 0.9rem;
+		}
+
+		.search-results {
+			position: fixed;
+			top: auto;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			border-radius: 20px 20px 0 0;
+			max-height: 0;
+		}
+
+		.search-results.active {
+			max-height: 60vh;
+			padding: 16px;
+		}
+	}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('search-input');
+    const searchResults = document.getElementById('search-results');
+    const searchButton = document.querySelector('.search-button');
+
+    async function fetchDestinos() {
+        try {
+            const response = await fetch('/api/destinos.json');
+            if (!response.ok) throw new Error('Erro ao buscar destinos');
+            return await response.json();
+        } catch (error) {
+            console.error('Erro:', error);
+            return [];
+        }
+    }
+
+    function formatPrice(price) {
+        return new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        }).format(price);
+    }
+
+    function searchDestinos(query, destinos) {
+        if (!query || !destinos) return [];
+        query = query.toLowerCase().trim();
+        return destinos.filter(destino => {
+            return (
+                destino.title?.toLowerCase().includes(query) ||
+                destino.location?.toLowerCase().includes(query)
+            );
+        });
+    }
+
+    function displayResults(results) {
+        if (!searchResults) return;
+
+        searchResults.innerHTML = '';
+        
+        if (results.length === 0) {
+            searchResults.innerHTML = `
+                <div class="search-result-item">
+                    <div class="search-result-content">
+                        <div class="search-result-title">Nenhum resultado encontrado</div>
+                    </div>
+                </div>
+            `;
+            return;
+        }
+
+        results.forEach(result => {
+            const div = document.createElement('div');
+            div.className = 'search-result-item';
+            div.innerHTML = `
+                <div class="search-result-content">
+                    <div class="search-result-title">${result.title}</div>
+                    <div class="search-result-location">${result.location}</div>
+                </div>
+                <div class="search-result-price">${formatPrice(result.price)}</div>
+            `;
+            div.addEventListener('click', () => {
+                window.location.href = `/destinos/${result.slug}`;
+            });
+            searchResults.appendChild(div);
+        });
+    }
+
+    let destinos = [];
+    let timeoutId = null;
+
+    // Carregar destinos ao iniciar
+    fetchDestinos().then(data => {
+        destinos = data;
+    });
+
+    // Event listeners
+    searchInput?.addEventListener('input', () => {
+        clearTimeout(timeoutId);
+        const query = searchInput.value.trim();
+
+        if (query.length >= 2) {
+            timeoutId = setTimeout(() => {
+                const results = searchDestinos(query, destinos);
+                searchResults?.classList.add('active');
+                displayResults(results);
+            }, 300);
+        } else {
+            searchResults?.classList.remove('active');
+            searchResults.innerHTML = '';
+        }
+    });
+
+    searchButton?.addEventListener('click', () => {
+        const query = searchInput?.value.trim();
+        if (query && query.length >= 2) {
+            const results = searchDestinos(query, destinos);
+            searchResults?.classList.add('active');
+            displayResults(results);
+        }
+    });
+
+    // Fechar resultados ao clicar fora
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.search-container')) {
+            searchResults?.classList.remove('active');
+        }
+    });
+});
 </script>
