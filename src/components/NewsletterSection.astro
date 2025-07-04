@@ -3,23 +3,25 @@ export interface Props {
 	title?: string;
 	subtitle?: string;
 	description?: string;
-	placeholder?: string;
 	buttonText?: string;
 	backgroundColor?: string;
 	textColor?: string;
 	containerMaxWidth?: string;
+	whatsappNumber?: string;
 }
 
 const {
 	title = "Receba a programação atualizada",
 	subtitle = "de passeios e excursões!",
 	description = "Fique por dentro das próximas saídas, ofertas especiais e novidades exclusivas. Vamos juntos explorar novos destinos!",
-	placeholder = "Digite aqui seu e-mail",
-	buttonText = "Eu Quero!",
+	buttonText = "Solicite pelo WhatsApp",
 	backgroundColor = "#1e3a8a",
 	textColor = "#ffffff",
-	containerMaxWidth = "1200px"
+	containerMaxWidth = "1200px",
+	whatsappNumber = "5511999999999" // Substitua pelo número correto
 } = Astro.props;
+
+const whatsappUrl = `https://wa.me/5554996415665?text=Olá! Gostaria de receber informações sobre passeios e excursões.`;
 ---
 
 <section class="newsletter-section" style={`background: ${backgroundColor}; color: ${textColor};`}>
@@ -42,22 +44,13 @@ const {
 						<p class="newsletter-description">{description}</p>
 					</div>
 
-					<div class="newsletter-form">
-						<form class="email-form" id="newsletterForm">
-							<div class="input-group">
-								<input 
-									type="email" 
-									class="email-input" 
-									placeholder={placeholder}
-									required
-									id="emailInput"
-								/>
-								<button type="submit" class="submit-btn">
-									{buttonText}
-								</button>
-							</div>
-							<div class="form-message" id="formMessage"></div>
-						</form>
+					<div class="whatsapp-button-container">
+						<a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="whatsapp-button">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="whatsapp-icon">
+								<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+							</svg>
+							{buttonText}
+						</a>
 					</div>
 				</div>
 			</div>
@@ -130,46 +123,33 @@ const {
 		margin: 0;
 	}
 
-	.input-group {
+	.whatsapp-button-container {
 		display: flex;
-		gap: 1rem;
-		background: white;
-		border-radius: 50px;
-		padding: 0.5rem;
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		justify-content: center;
 	}
 
-	.email-input {
-		flex: 1;
-		padding: 1rem 1.5rem;
-		border: none;
-		outline: none;
-		border-radius: 25px;
-		font-size: 1rem;
-		color: #374151;
-	}
-
-	.submit-btn {
-		background: #10b981;
+	.whatsapp-button {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		background: #25D366;
 		color: white;
-		border: none;
+		text-decoration: none;
 		padding: 1rem 2rem;
 		border-radius: 25px;
 		font-weight: 600;
 		cursor: pointer;
 		transition: background-color 0.3s;
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 	}
 
-	.submit-btn:hover {
-		background: #059669;
+	.whatsapp-button:hover {
+		background: #128C7E;
 	}
 
-	.form-message {
-		margin-top: 1rem;
-		padding: 0.5rem;
-		border-radius: 8px;
-		font-size: 0.9rem;
-		text-align: center;
+	.whatsapp-icon {
+		width: 24px;
+		height: 24px;
 	}
 
 	@media (max-width: 768px) {
@@ -196,16 +176,9 @@ const {
 			font-size: 2rem;
 		}
 
-		.input-group {
-			flex-direction: column;
-			gap: 0.75rem;
-			padding: 0.75rem;
-		}
-
-		.email-input,
-		.submit-btn {
+		.whatsapp-button {
 			width: 100%;
-			text-align: center;
+			justify-content: center;
 		}
 	}
 
@@ -227,60 +200,3 @@ const {
 		}
 	}
 </style>
-
-<script>
-	class NewsletterForm {
-		constructor() {
-			this.form = document.getElementById('newsletterForm');
-			this.emailInput = document.getElementById('emailInput');
-			this.messageDiv = document.getElementById('formMessage');
-
-			if (this.form) {
-				this.init();
-			}
-		}
-
-		init() {
-			this.form.addEventListener('submit', (e) => this.handleSubmit(e));
-		}
-
-		async handleSubmit(e) {
-			e.preventDefault();
-			
-			const email = this.emailInput.value.trim();
-			
-			if (!this.isValidEmail(email)) {
-				this.showMessage('Por favor, insira um e-mail válido.', 'error');
-				return;
-			}
-
-			this.showMessage('Processando...', 'info');
-			
-			try {
-				await new Promise(resolve => setTimeout(resolve, 1500));
-				this.showMessage('Obrigado! Você foi inscrito com sucesso em nossa newsletter.', 'success');
-				this.emailInput.value = '';
-			} catch (error) {
-				this.showMessage('Erro ao processar inscrição. Tente novamente.', 'error');
-			}
-		}
-
-		isValidEmail(email) {
-			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-			return emailRegex.test(email);
-		}
-
-		showMessage(message, type) {
-			this.messageDiv.textContent = message;
-			this.messageDiv.className = `form-message ${type} show`;
-			
-			setTimeout(() => {
-				this.messageDiv.classList.remove('show');
-			}, 5000);
-		}
-	}
-
-	document.addEventListener('DOMContentLoaded', () => {
-		new NewsletterForm();
-	});
-</script>
