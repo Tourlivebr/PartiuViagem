@@ -4,7 +4,7 @@ import { Image } from 'astro:assets';
 
 const allDestinos = await getCollection('destinos');
 const destinosNacionais = allDestinos
-	.filter(destino => destino.data.country === 'BRASIL')
+	.filter(destino => destino.data.country.includes('BRASIL'))
 	.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
 ---
 
