@@ -47,7 +47,7 @@ const destinosInternacionais = destinos
 									</div>
 									<div class="price">
 										<span class="currency">{destino.data.currency}</span>
-										<span class="amount">{destino.data.price}</span>
+										<span class="amount">{destino.data.price.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
 									</div>
 								</div>
 								<div class="btn-ver-mais">Ver Mais</div>
@@ -214,13 +214,13 @@ const destinosInternacionais = destinos
 	}
 
 	.currency {
-		color: #3b82f6;
+		color: #b91c1c;
 		font-weight: 600;
 		font-size: 0.9rem;
 	}
 
 	.amount {
-		color: #3b82f6;
+		color: #b91c1c;
 		font-weight: 700;
 		font-size: 1.2rem;
 	}

@@ -49,7 +49,7 @@ const { title, description, location, country, price, currency, rating, reviewCo
 						<span>{rating} ({reviewCount} avaliações)</span>
 					</div>
 					<div class="price-info">
-						<span class="price">{currency} {price.toLocaleString('pt-BR')}</span>
+						<span class="price">{currency} {price.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
 					</div>
 				</div>
 
@@ -187,7 +187,7 @@ const { title, description, location, country, price, currency, rating, reviewCo
 	.price {
 		font-size: 1.5rem;
 		font-weight: bold;
-		color: #10b981;
+		color: #047857;
 	}
 
 	main {
@@ -286,13 +286,13 @@ const { title, description, location, country, price, currency, rating, reviewCo
 	}
 
 	.stars {
-		color: #ffc107;
+		color: #64748b;
 	}
 
 	.price {
-		font-size: 2rem;
+		font-size: 1.5rem;
 		font-weight: bold;
-		color: #ffc107;
+		color: #047857;
 	}
 
 	.content-section {
