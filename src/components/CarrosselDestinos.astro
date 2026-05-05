@@ -1,6 +1,31 @@
 ---
 import { getCollection } from 'astro:content';
 
+const cutoffDate = new Date(2026, 4, 5);
+
+function parseTripDate(dateString) {
+  if (typeof dateString !== 'string') return null;
+
+  const match = dateString.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if (!match) return null;
+
+  const [, day, month, year] = match;
+  return new Date(Number(year), Number(month) - 1, Number(day));
+}
+
+function shouldShowDestination(tripDates = []) {
+  if (!Array.isArray(tripDates) || tripDates.length === 0) return true;
+
+  const validDates = tripDates.map(parseTripDate).filter(Boolean);
+  if (validDates.length === 0) return true;
+
+  const lastTripDate = validDates.reduce((latestDate, currentDate) =>
+    currentDate > latestDate ? currentDate : latestDate
+  );
+
+  return lastTripDate >= cutoffDate;
+}
+
 // Buscar destinos nacionais
 const allDestinos = await getCollection('destinos');
 // Filter more broadly to ensure we catch files in subdirectories
@@ -10,7 +35,9 @@ const destinosNacionais = allDestinos.filter(destino =>
   (destino.collection === 'destinos' && destino.id.includes('nacionais'))) &&
   !destino.id.includes('internacionais') && 
   !destino.slug.includes('internacionais') &&
-  destino.data.showInCarousel
+  destino.data.showInCarousel &&
+  shouldShowDestination(destino.data.tripDates) &&
+  destino.data.title !== 'Ametista do Sul'
 );
 
 console.log(`Found ${destinosNacionais.length} national destinations`);
