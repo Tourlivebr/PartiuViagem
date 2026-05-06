@@ -25,7 +25,15 @@ const ingressos = destinosInternacionais.map(destino => ({
   totalAvaliacoes: destino.data.reviewCount || 0,
   preco: destino.data.price || 0,
   slug: `destinos/internacionais/${destino.slug.replace(/^internacionais\//, '')}`,
-  duracao: destino.data.tripDates ? `${destino.data.tripDates.length} datas` : "Consulte",
+  dataPasseio: destino.data.dateRange || (destino.data.tripDates && destino.data.tripDates[0]) || "Consulte",
+  destino: destino.data.location || "Mundo",
+  termoBusca: [
+    destino.data.title,
+    destino.data.description,
+    destino.data.location || "Mundo",
+    destino.data.dateRange || "",
+    ...(destino.data.tripDates || []),
+  ].join(' ').toLowerCase(),
   tags: [
     destino.data.location || "Mundo",
     destino.data.isPromo ? "Promoção" : "Imperdível",
@@ -82,6 +90,22 @@ const ingressos = destinosInternacionais.map(destino => ({
       <div class="container mx-auto px-4">
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
           <div class="flex flex-col lg:flex-row justify-between items-center gap-6">
+            <div class="w-full lg:max-w-xl">
+              <div class="relative">
+                <input
+                  type="text"
+                  id="search-destinos-internacionais"
+                  placeholder="Pesquisar por nome, destino, descrição ou data"
+                  class="w-full pl-11 pr-4 py-3 border border-gray-300 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:bg-gray-700 dark:border-gray-600 dark:text-white shadow-md"
+                  autocomplete="off"
+                />
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
             <div class="flex flex-wrap gap-3">
               <button class="filter-btn active px-6 py-3 bg-primary-600 text-white rounded-full text-sm font-semibold hover:bg-primary-700 transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5" data-filter="all">
                 <span class="flex items-center gap-2">
@@ -112,7 +136,7 @@ const ingressos = destinosInternacionais.map(destino => ({
       <div class="container mx-auto px-4">
         <div id="ingressos-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {ingressos.map((ingresso) => (
-            <div class="ingresso-card group bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 dark:border-gray-700" data-category="destinos">
+            <div class="ingresso-card group bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 dark:border-gray-700" data-category="destinos" data-search={ingresso.termoBusca}>
               <div class="relative overflow-hidden">
                 <img 
                   src={ingresso.imagem} 
@@ -172,7 +196,7 @@ const ingressos = destinosInternacionais.map(destino => ({
                         <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
                           <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
                         </svg>
-                        Duração: {ingresso.duracao}
+                        Data: {ingresso.dataPasseio}
                       </p>
                     </div>
                   </div>
@@ -192,6 +216,10 @@ const ingressos = destinosInternacionais.map(destino => ({
             </div>
           ))}
         </div>
+        <div id="internacionais-empty-state" class="hidden text-center py-16">
+          <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">Nenhum roteiro encontrado.</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">Tente pesquisar por outro nome, destino, descrição ou data.</p>
+        </div>
       </div>
     </section>
   </main>
@@ -200,6 +228,31 @@ const ingressos = destinosInternacionais.map(destino => ({
 </BaseLayout>
 
 <script>
+  const searchInput = document.getElementById('search-destinos-internacionais');
+  const grid = document.getElementById('ingressos-grid');
+  const emptyState = document.getElementById('internacionais-empty-state');
+
+  function updateEmptyState() {
+    const visibleCards = Array.from(document.querySelectorAll('.ingresso-card')).filter(card => card.style.display !== 'none');
+    emptyState?.classList.toggle('hidden', visibleCards.length > 0);
+  }
+
+  function applySearch() {
+    const query = (searchInput?.value || '').trim().toLowerCase();
+    const activeFilter = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
+    const cards = document.querySelectorAll('.ingresso-card');
+
+    cards.forEach(card => {
+      const matchesFilter = activeFilter === 'all' || card.dataset.category === activeFilter;
+      const haystack = card.dataset.search || '';
+      const matchesSearch = !query || haystack.includes(query);
+
+      card.style.display = matchesFilter && matchesSearch ? 'block' : 'none';
+    });
+
+    updateEmptyState();
+  }
+
   // Filtros
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -223,13 +276,16 @@ const ingressos = destinosInternacionais.map(destino => ({
           card.style.display = 'none';
         }
       });
+
+      applySearch();
     });
   });
+
+  searchInput?.addEventListener('input', applySearch);
   
   // Ordenação
   document.getElementById('sortSelect').addEventListener('change', (e) => {
     const sortBy = e.target.value;
-    const grid = document.getElementById('ingressos-grid');
     const cards = Array.from(grid.children);
     
     cards.sort((a, b) => {
@@ -251,5 +307,6 @@ const ingressos = destinosInternacionais.map(destino => ({
     });
     
     cards.forEach(card => grid.appendChild(card));
+    applySearch();
   });
 </script>

@@ -78,7 +78,7 @@ const destinos = destinosNacionais.map(destino => ({
   </div>
 
   <!-- Container do carrossel -->
-  <div class="relative overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4" id="carousel-wrapper-destinos">
+  <div class="relative overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4 select-none" id="carousel-wrapper-destinos">
     <div id="carousel-container-destinos" class="flex gap-4 w-max px-4">
       {destinos.map((destino) => (
         <div class="flex-none w-[85vw] sm:w-[45vw] lg:w-[30vw] xl:w-[22vw] snap-center">
@@ -189,47 +189,90 @@ const destinos = destinosNacionais.map(destino => ({
     const nextBtn = document.getElementById('next-btn-destinos');
     
     if (!wrapper || !prevBtn || !nextBtn || !container) return;
+    if (wrapper.dataset.initialized === 'true') return;
+
+    wrapper.dataset.initialized = 'true';
 
     // Mouse Drag Logic
     let isDown = false;
-    let startX;
-    let scrollLeft;
+    let isDragging = false;
+    let startX = 0;
+    let scrollLeft = 0;
+    const dragThreshold = 8;
+
+    const stopDragging = () => {
+      isDown = false;
+      wrapper.classList.remove('cursor-grabbing');
+      wrapper.classList.add('cursor-grab');
+      wrapper.style.scrollSnapType = '';
+      document.body.style.userSelect = '';
+
+      requestAnimationFrame(() => {
+        isDragging = false;
+      });
+    };
 
     wrapper.addEventListener('mousedown', (e) => {
+      if (e.button !== 0) return;
       isDown = true;
+      isDragging = false;
       wrapper.classList.add('cursor-grabbing');
       wrapper.classList.remove('cursor-grab');
-      // Disable snap while dragging for smoother feel
       wrapper.style.scrollSnapType = 'none';
+      document.body.style.userSelect = 'none';
       startX = e.pageX - wrapper.offsetLeft;
       scrollLeft = wrapper.scrollLeft;
     });
 
     wrapper.addEventListener('mouseleave', () => {
-      isDown = false;
-      wrapper.classList.remove('cursor-grabbing');
-      wrapper.style.scrollSnapType = ''; // Re-enable snap
+      if (isDown) stopDragging();
     });
 
-    wrapper.addEventListener('mouseup', () => {
-      isDown = false;
-      wrapper.classList.remove('cursor-grabbing');
-      wrapper.style.scrollSnapType = ''; // Re-enable snap
-    });
+    wrapper.addEventListener('mouseup', stopDragging);
+    window.addEventListener('mouseup', stopDragging);
 
     wrapper.addEventListener('mousemove', (e) => {
       if (!isDown) return;
       e.preventDefault();
       const x = e.pageX - wrapper.offsetLeft;
-      const walk = (x - startX) * 2; // Scroll-fast
+      const distance = x - startX;
+
+      if (Math.abs(distance) > dragThreshold) {
+        isDragging = true;
+      }
+
+      const walk = distance * 1.35;
       wrapper.scrollLeft = scrollLeft - walk;
     });
 
+    container.addEventListener('click', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      e.stopPropagation();
+    }, true);
+
+    wrapper.addEventListener('wheel', (e) => {
+      if (window.innerWidth < 1024) return;
+      if (wrapper.scrollWidth <= wrapper.clientWidth) return;
+
+      // Mantem a rolagem vertical da pagina livre no desktop.
+      // O carrossel usa a roda apenas com gesto horizontal/trackpad ou Shift + roda.
+      const isHorizontalGesture = Math.abs(e.deltaX) > Math.abs(e.deltaY);
+      const shouldScrollCarousel = isHorizontalGesture || e.shiftKey;
+
+      if (!shouldScrollCarousel) return;
+
+      const delta = isHorizontalGesture ? e.deltaX : e.deltaY;
+      if (!delta) return;
+
+      e.preventDefault();
+      wrapper.scrollBy({ left: delta * 1.2, behavior: 'auto' });
+    }, { passive: false });
+
     // Navigation Buttons Logic
     const getScrollAmount = () => {
-      // Scroll by one card width (approximate based on first card)
       const card = container.children[0];
-      return card ? card.clientWidth + 16 : 300; // 16px gap
+      return card ? card.clientWidth + 16 : 300;
     };
 
     const newPrevBtn = prevBtn.cloneNode(true);
@@ -245,7 +288,6 @@ const destinos = destinosNacionais.map(destino => ({
       wrapper.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
     });
     
-    // Initial cursor style
     wrapper.classList.add('cursor-grab');
   }
 

@@ -222,6 +222,22 @@ const destinos = destinosInternacionais.map(destino => ({
       wrapper.scrollLeft = scrollLeft - walk;
     });
 
+    wrapper.addEventListener('wheel', (e) => {
+      if (window.innerWidth < 1024) return;
+      if (wrapper.scrollWidth <= wrapper.clientWidth) return;
+
+      const isHorizontalGesture = Math.abs(e.deltaX) > Math.abs(e.deltaY);
+      const shouldScrollCarousel = isHorizontalGesture || e.shiftKey;
+
+      if (!shouldScrollCarousel) return;
+
+      const delta = isHorizontalGesture ? e.deltaX : e.deltaY;
+      if (!delta) return;
+
+      e.preventDefault();
+      wrapper.scrollBy({ left: delta * 1.2, behavior: 'auto' });
+    }, { passive: false });
+
     // Navigation Buttons Logic
     const getScrollAmount = () => {
       const card = container.children[0];

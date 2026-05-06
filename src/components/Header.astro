@@ -16,6 +16,8 @@ const destinosSearch = allDestinos.map(destino => {
     subtitulo: destino.data.description,
     categoria: isInternational ? "DESTINOS INTERNACIONAIS" : "DESTINOS NACIONAIS",
     tipo: "destino", // Diferenciar de passeios/descontos
+    destino: destino.data.location || (isInternational ? "Mundo" : "Brasil"),
+    dataPasseio: destino.data.dateRange || (destino.data.tripDates && destino.data.tripDates.join(" | ")) || "",
     slug: isInternational 
       ? `destinos/internacionais/${destino.slug.replace(/^internacionais\//, '')}`
       : `destinos/nacionais/${destino.slug.replace(/^nacionais\//, '')}`
@@ -245,6 +247,8 @@ const destinosSearch = allDestinos.map(destino => {
       subtitulo: "Transporte Privativo",
       categoria: "RECEPTIVO",
       tipo: "passeios",
+      destino: "Gramado e Canela",
+      dataPasseio: "",
       slug: "transfer-privativo"
     },
     {
@@ -253,6 +257,8 @@ const destinosSearch = allDestinos.map(destino => {
       subtitulo: "Com Trem Maria Fumaça e Épopeia",
       categoria: "PASSEIOS",
       tipo: "passeios",
+      destino: "Serra Gaucha",
+      dataPasseio: "",
       slug: "tour-trem-vinho-maria-fumaca"
     },
     {
@@ -261,6 +267,8 @@ const destinosSearch = allDestinos.map(destino => {
       subtitulo: "Passeio Privativo",
       categoria: "PASSEIOS PRIVATIVOS",
       tipo: "passeios",
+      destino: "Gramado e Canela",
+      dataPasseio: "",
       slug: "ensaio-fotografico-gramado-canela"
     }
   ];
@@ -301,7 +309,9 @@ const destinosSearch = allDestinos.map(destino => {
     
     const filteredPasseios = todosPasseios.filter(passeio => 
       passeio.titulo.toLowerCase().includes(query.toLowerCase()) ||
-      (passeio.subtitulo && passeio.subtitulo.toLowerCase().includes(query.toLowerCase()))
+      (passeio.subtitulo && passeio.subtitulo.toLowerCase().includes(query.toLowerCase())) ||
+      (passeio.destino && passeio.destino.toLowerCase().includes(query.toLowerCase())) ||
+      (passeio.dataPasseio && passeio.dataPasseio.toLowerCase().includes(query.toLowerCase()))
     );
     
     console.log('Filtered results:', filteredPasseios); // Debug
@@ -320,6 +330,7 @@ const destinosSearch = allDestinos.map(destino => {
             <a href="${passeio.link}" target="_blank" class="block p-3 hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-b-0">
               <div class="font-medium text-gray-800">${passeio.titulo}</div>
               <div class="text-sm text-gray-600">${passeio.subtitulo || ''}</div>
+              <div class="text-xs text-gray-500 mt-1">${passeio.destino || ''}${passeio.dataPasseio ? ` • ${passeio.dataPasseio}` : ''}</div>
               <div class="text-xs text-blue-600 mt-1">${passeio.categoria}</div>
             </a>
           `;
@@ -330,6 +341,7 @@ const destinosSearch = allDestinos.map(destino => {
             <a href="${href}" class="block p-3 hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-b-0">
               <div class="font-medium text-gray-800">${passeio.titulo}</div>
               <div class="text-sm text-gray-600">${passeio.subtitulo || ''}</div>
+              <div class="text-xs text-gray-500 mt-1">${passeio.destino || ''}${passeio.dataPasseio ? ` • ${passeio.dataPasseio}` : ''}</div>
               <div class="text-xs text-blue-600 mt-1">${passeio.categoria}</div>
             </a>
           `;
