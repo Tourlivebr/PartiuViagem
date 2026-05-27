@@ -26,6 +26,17 @@ function shouldShowDestination(tripDates = []) {
   return lastTripDate >= cutoffDate;
 }
 
+function getNearestTripDate(tripDates = []) {
+  if (!Array.isArray(tripDates) || tripDates.length === 0) return null;
+
+  const validDates = tripDates
+    .map(parseTripDate)
+    .filter(Boolean)
+    .sort((a, b) => a.getTime() - b.getTime());
+
+  return validDates[0] || null;
+}
+
 // Buscar destinos nacionais
 const allDestinos = await getCollection('destinos');
 // Filter more broadly to ensure we catch files in subdirectories
@@ -38,7 +49,19 @@ const destinosNacionais = allDestinos.filter(destino =>
   destino.data.showInCarousel &&
   shouldShowDestination(destino.data.tripDates) &&
   destino.data.title !== 'Ametista do Sul'
-);
+).sort((a, b) => {
+  const firstDate = getNearestTripDate(a.data.tripDates);
+  const secondDate = getNearestTripDate(b.data.tripDates);
+
+  if (firstDate && secondDate) {
+    return firstDate.getTime() - secondDate.getTime();
+  }
+
+  if (firstDate) return -1;
+  if (secondDate) return 1;
+
+  return a.data.title.localeCompare(b.data.title, 'pt-BR');
+});
 
 console.log(`Found ${destinosNacionais.length} national destinations`);
 
@@ -141,7 +164,7 @@ const destinos = destinosNacionais.map(destino => ({
                   <div>
                     <p class="text-sm text-secondary-500 dark:text-neutral-400">A partir de</p>
                     <p class="text-2xl font-bold text-secondary-900 dark:text-neutral-100">
-                      {`R$ ${destino.preco.toFixed(2).replace('.', ',')}`}
+                      {destino.preco > 0 ? `R$ ${destino.preco.toFixed(2).replace('.', ',')}` : 'Valores em breve'}
                     </p>
                   </div>
                 </div>

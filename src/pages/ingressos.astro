@@ -5,6 +5,31 @@ import Footer from '../components/Footer.astro';
 import StarRating from '../components/StarRating.astro';
 import { getCollection } from 'astro:content';
 
+const cutoffDate = new Date(2026, 4, 5);
+
+function parseTripDate(dateString) {
+  if (typeof dateString !== 'string') return null;
+
+  const match = dateString.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if (!match) return null;
+
+  const [, day, month, year] = match;
+  return new Date(Number(year), Number(month) - 1, Number(day));
+}
+
+function shouldShowDestination(tripDates = []) {
+  if (!Array.isArray(tripDates) || tripDates.length === 0) return true;
+
+  const validDates = tripDates.map(parseTripDate).filter(Boolean);
+  if (validDates.length === 0) return true;
+
+  const lastTripDate = validDates.reduce((latestDate, currentDate) =>
+    currentDate > latestDate ? currentDate : latestDate
+  );
+
+  return lastTripDate >= cutoffDate;
+}
+
 // Buscar destinos nacionais
 const allDestinos = await getCollection('destinos');
 // Filter more broadly to ensure we catch files in subdirectories
@@ -13,7 +38,9 @@ const destinosNacionais = allDestinos.filter(destino =>
   destino.slug.includes('nacionais/') ||
   (destino.collection === 'destinos' && destino.id.includes('nacionais'))) &&
   !destino.id.includes('internacionais') && 
-  !destino.slug.includes('internacionais')
+  !destino.slug.includes('internacionais') &&
+  destino.data.showInCarousel &&
+  shouldShowDestination(destino.data.tripDates)
 );
 
 // Mapear para o formato esperado pelo componente (opcional, ou usar direto)
@@ -192,7 +219,7 @@ const ingressos = destinosNacionais.map(destino => ({
                     <div>
                       <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">A partir de</p>
                       <p class="text-3xl font-bold text-primary-600 dark:text-primary-400">
-                        R$ {ingresso.preco.toFixed(2).replace('.', ',')}
+                        {ingresso.preco > 0 ? `R$ ${ingresso.preco.toFixed(2).replace('.', ',')}` : 'Valores em breve'}
                       </p>
                       <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 flex items-center">
                         <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
