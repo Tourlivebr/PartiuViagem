@@ -37,6 +37,36 @@ function getNearestTripDate(tripDates = []) {
   return validDates[0] || null;
 }
 
+function getTripLengthLabel(tripDates = []) {
+  const totalDays = Array.isArray(tripDates) ? tripDates.length : 0;
+  if (totalDays <= 1) return 'Passeio de 1 dia';
+  return `${totalDays} dias de roteiro`;
+}
+
+function getHighlightLabel(description = '', keywords = []) {
+  const ignoredTerms = /partiu viagem|turismo|viagem nacional|viagem internacional|brasil|mundo/i;
+  const preferredKeyword = Array.isArray(keywords)
+    ? keywords.find((keyword) =>
+        typeof keyword === 'string' &&
+        keyword.trim().length >= 5 &&
+        !ignoredTerms.test(keyword)
+      )
+    : null;
+
+  if (preferredKeyword) return preferredKeyword;
+
+  const cleanedDescription = String(description)
+    .replace(/\s+/g, ' ')
+    .trim();
+  const firstSnippet = cleanedDescription
+    .split(/[.;:|]/)
+    .map((snippet) => snippet.trim())
+    .find((snippet) => snippet.length >= 12);
+
+  const fallback = firstSnippet || cleanedDescription || 'Roteiro especial';
+  return fallback.length > 42 ? `${fallback.slice(0, 39).trim()}...` : fallback;
+}
+
 // Buscar destinos nacionais
 const allDestinos = await getCollection('destinos');
 // Filter more broadly to ensure we catch files in subdirectories
@@ -79,8 +109,8 @@ const destinos = destinosNacionais.map(destino => ({
   slug: `destinos/nacionais/${destino.slug.replace(/^nacionais\//, '')}`,
   tags: [
     destino.data.location || "Brasil",
-    destino.data.isPromo ? "Promoção" : "Imperdível",
-    "Viagem Nacional"
+    getTripLengthLabel(destino.data.tripDates),
+    getHighlightLabel(destino.data.description, destino.data.keywords)
   ]
 }));
 ---

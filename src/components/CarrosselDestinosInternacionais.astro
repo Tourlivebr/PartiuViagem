@@ -39,6 +39,32 @@ function getNearestTripDate(tripDates: string[] = []): Date | null {
   return validDates[0] || null;
 }
 
+function getTripLengthLabel(tripDates: string[] = []): string {
+  const totalDays = Array.isArray(tripDates) ? tripDates.length : 0;
+  if (totalDays <= 1) return 'Passeio de 1 dia';
+  return `${totalDays} dias de roteiro`;
+}
+
+function getHighlightLabel(description = '', keywords: string[] = []): string {
+  const ignoredTerms = /partiu viagem|turismo|viagem nacional|viagem internacional|brasil|mundo/i;
+  const preferredKeyword = Array.isArray(keywords)
+    ? keywords.find((keyword) => keyword.trim().length >= 5 && !ignoredTerms.test(keyword))
+    : null;
+
+  if (preferredKeyword) return preferredKeyword;
+
+  const cleanedDescription = String(description)
+    .replace(/\s+/g, ' ')
+    .trim();
+  const firstSnippet = cleanedDescription
+    .split(/[.;:|]/)
+    .map((snippet) => snippet.trim())
+    .find((snippet) => snippet.length >= 12);
+
+  const fallback = firstSnippet || cleanedDescription || 'Roteiro especial';
+  return fallback.length > 42 ? `${fallback.slice(0, 39).trim()}...` : fallback;
+}
+
 // Buscar destinos internacionais
 const allDestinos = await getCollection('destinos');
 // Filter more broadly to ensure we catch files in subdirectories
@@ -78,8 +104,8 @@ const destinos = destinosInternacionais.map(destino => ({
   slug: `destinos/internacionais/${destino.slug.replace(/^internacionais\//, '')}`,
   tags: [
     destino.data.location || "Mundo",
-    destino.data.isPromo ? "Promoção" : "Imperdível",
-    "Viagem Internacional"
+    getTripLengthLabel(destino.data.tripDates),
+    getHighlightLabel(destino.data.description, destino.data.keywords || [])
   ]
 }));
 ---
