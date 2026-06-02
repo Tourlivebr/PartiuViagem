@@ -173,10 +173,18 @@ const ingressos = destinosInternacionais.map(destino => ({
                   class="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div class="absolute top-4 left-4">
-                  <span class="bg-primary-600 text-white px-4 py-2 rounded-full text-xs font-bold shadow-lg backdrop-blur-sm">
-                    {ingresso.categoria}
-                  </span>
+                <div class="absolute top-4 left-4 right-4">
+                  <div class="inline-flex max-w-full items-center rounded-xl bg-slate-950/76 px-3 py-1.5 shadow-lg ring-1 ring-white/15 backdrop-blur-md">
+                    <div class="mr-2.5 h-7 w-1 rounded-full bg-gradient-to-b from-sky-400 via-cyan-400 to-blue-500"></div>
+                    <div class="min-w-0">
+                      <p class="text-[9px] font-bold uppercase tracking-[0.18em] text-cyan-200">
+                        Próxima saída
+                      </p>
+                      <p class="truncate text-base font-extrabold leading-tight text-white">
+                        {ingresso.dataPasseio}
+                      </p>
+                    </div>
+                  </div>
                 </div>
                 <div class="absolute top-4 right-4">
                   <div class="bg-white/90 backdrop-blur-sm rounded-full p-2 shadow-lg">
@@ -220,12 +228,6 @@ const ingressos = destinosInternacionais.map(destino => ({
                       <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">A partir de</p>
                       <p class="text-3xl font-bold text-primary-600 dark:text-primary-400">
                         {ingresso.preco > 0 ? `R$ ${ingresso.preco.toFixed(2).replace('.', ',')}` : 'Valores em breve'}
-                      </p>
-                      <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 flex items-center">
-                        <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
-                        </svg>
-                        Data: {ingresso.dataPasseio}
                       </p>
                     </div>
                   </div>
