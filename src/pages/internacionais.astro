@@ -7,7 +7,7 @@ import { getCollection } from 'astro:content';
 
 const cutoffDate = new Date(2026, 4, 5);
 
-function parseTripDate(dateString) {
+function parseTripDate(dateString: string): Date | null {
   if (typeof dateString !== 'string') return null;
 
   const match = dateString.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
@@ -17,10 +17,12 @@ function parseTripDate(dateString) {
   return new Date(Number(year), Number(month) - 1, Number(day));
 }
 
-function shouldShowDestination(tripDates = []) {
+function shouldShowDestination(tripDates: string[] = []): boolean {
   if (!Array.isArray(tripDates) || tripDates.length === 0) return true;
 
-  const validDates = tripDates.map(parseTripDate).filter(Boolean);
+  const validDates = tripDates
+    .map(parseTripDate)
+    .filter((date): date is Date => date !== null);
   if (validDates.length === 0) return true;
 
   const lastTripDate = validDates.reduce((latestDate, currentDate) =>
@@ -259,19 +261,19 @@ const ingressos = destinosInternacionais.map(destino => ({
 </BaseLayout>
 
 <script>
-  const searchInput = document.getElementById('search-destinos-internacionais');
-  const grid = document.getElementById('ingressos-grid');
-  const emptyState = document.getElementById('internacionais-empty-state');
+  const searchInput = document.getElementById('search-destinos-internacionais') as HTMLInputElement | null;
+  const grid = document.getElementById('ingressos-grid') as HTMLElement | null;
+  const emptyState = document.getElementById('internacionais-empty-state') as HTMLElement | null;
 
   function updateEmptyState() {
-    const visibleCards = Array.from(document.querySelectorAll('.ingresso-card')).filter(card => card.style.display !== 'none');
+    const visibleCards = Array.from(document.querySelectorAll<HTMLElement>('.ingresso-card')).filter(card => card.style.display !== 'none');
     emptyState?.classList.toggle('hidden', visibleCards.length > 0);
   }
 
   function applySearch() {
     const query = (searchInput?.value || '').trim().toLowerCase();
-    const activeFilter = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
-    const cards = document.querySelectorAll('.ingresso-card');
+    const activeFilter = document.querySelector<HTMLElement>('.filter-btn.active')?.dataset.filter || 'all';
+    const cards = document.querySelectorAll<HTMLElement>('.ingresso-card');
 
     cards.forEach(card => {
       const matchesFilter = activeFilter === 'all' || card.dataset.category === activeFilter;
@@ -285,10 +287,10 @@ const ingressos = destinosInternacionais.map(destino => ({
   }
 
   // Filtros
-  document.querySelectorAll('.filter-btn').forEach(btn => {
+  document.querySelectorAll<HTMLElement>('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       // Remove active de todos os botões
-      document.querySelectorAll('.filter-btn').forEach(b => {
+      document.querySelectorAll<HTMLElement>('.filter-btn').forEach(b => {
         b.classList.remove('bg-primary-600', 'text-white');
         b.classList.add('bg-gray-200', 'text-gray-700', 'dark:bg-gray-700', 'dark:text-gray-300');
       });
@@ -298,7 +300,7 @@ const ingressos = destinosInternacionais.map(destino => ({
       btn.classList.add('bg-primary-600', 'text-white');
       
       const filter = btn.dataset.filter;
-      const cards = document.querySelectorAll('.ingresso-card');
+      const cards = document.querySelectorAll<HTMLElement>('.ingresso-card');
       
       cards.forEach(card => {
         if (filter === 'all' || card.dataset.category === filter) {
@@ -315,13 +317,20 @@ const ingressos = destinosInternacionais.map(destino => ({
   searchInput?.addEventListener('input', applySearch);
   
   // Ordenação
-  document.getElementById('sortSelect').addEventListener('change', (e) => {
-    const sortBy = e.target.value;
-    const cards = Array.from(grid.children);
+  const sortSelect = document.getElementById('sortSelect') as HTMLSelectElement | null;
+
+  sortSelect?.addEventListener('change', (e) => {
+    const target = e.currentTarget as HTMLSelectElement;
+    const sortBy = target.value;
+    if (!grid) return;
+
+    const cards = Array.from(grid.children) as HTMLElement[];
     
     cards.sort((a, b) => {
-      const priceA = parseFloat(a.querySelector('.text-3xl').textContent.replace('R$ ', '').replace(',', '.'));
-      const priceB = parseFloat(b.querySelector('.text-3xl').textContent.replace('R$ ', '').replace(',', '.'));
+      const priceAText = a.querySelector<HTMLElement>('.text-3xl')?.textContent || '0';
+      const priceBText = b.querySelector<HTMLElement>('.text-3xl')?.textContent || '0';
+      const priceA = parseFloat(priceAText.replace('R$ ', '').replace(',', '.')) || 0;
+      const priceB = parseFloat(priceBText.replace('R$ ', '').replace(',', '.')) || 0;
       
       switch(sortBy) {
         case 'menor-preco':
@@ -329,8 +338,10 @@ const ingressos = destinosInternacionais.map(destino => ({
         case 'maior-preco':
           return priceB - priceA;
         case 'melhor-avaliacao':
-          const ratingA = parseFloat(a.querySelector('.ml-2').textContent);
-          const ratingB = parseFloat(b.querySelector('.ml-2').textContent);
+          const ratingAText = a.querySelector<HTMLElement>('.ml-2')?.textContent || '0';
+          const ratingBText = b.querySelector<HTMLElement>('.ml-2')?.textContent || '0';
+          const ratingA = parseFloat(ratingAText) || 0;
+          const ratingB = parseFloat(ratingBText) || 0;
           return ratingB - ratingA;
         default:
           return 0;

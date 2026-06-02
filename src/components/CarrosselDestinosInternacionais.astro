@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 
 const cutoffDate = new Date(2026, 4, 5);
 
-function parseTripDate(dateString) {
+function parseTripDate(dateString: string): Date | null {
   if (typeof dateString !== 'string') return null;
 
   const match = dateString.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
@@ -13,10 +13,12 @@ function parseTripDate(dateString) {
   return new Date(Number(year), Number(month) - 1, Number(day));
 }
 
-function shouldShowDestination(tripDates = []) {
+function shouldShowDestination(tripDates: string[] = []): boolean {
   if (!Array.isArray(tripDates) || tripDates.length === 0) return true;
 
-  const validDates = tripDates.map(parseTripDate).filter(Boolean);
+  const validDates = tripDates
+    .map(parseTripDate)
+    .filter((date): date is Date => date !== null);
   if (validDates.length === 0) return true;
 
   const lastTripDate = validDates.reduce((latestDate, currentDate) =>
@@ -26,12 +28,12 @@ function shouldShowDestination(tripDates = []) {
   return lastTripDate >= cutoffDate;
 }
 
-function getNearestTripDate(tripDates = []) {
+function getNearestTripDate(tripDates: string[] = []): Date | null {
   if (!Array.isArray(tripDates) || tripDates.length === 0) return null;
 
   const validDates = tripDates
     .map(parseTripDate)
-    .filter(Boolean)
+    .filter((date): date is Date => date !== null)
     .sort((a, b) => a.getTime() - b.getTime());
 
   return validDates[0] || null;
@@ -213,8 +215,8 @@ const destinos = destinosInternacionais.map(destino => ({
 
     // Mouse Drag Logic
     let isDown = false;
-    let startX;
-    let scrollLeft;
+    let startX = 0;
+    let scrollLeft = 0;
 
     wrapper.addEventListener('mousedown', (e) => {
       isDown = true;
@@ -270,6 +272,7 @@ const destinos = destinosInternacionais.map(destino => ({
 
     const newPrevBtn = prevBtn.cloneNode(true);
     const newNextBtn = nextBtn.cloneNode(true);
+    if (!prevBtn.parentNode || !nextBtn.parentNode) return;
     prevBtn.parentNode.replaceChild(newPrevBtn, prevBtn);
     nextBtn.parentNode.replaceChild(newNextBtn, nextBtn);
 
