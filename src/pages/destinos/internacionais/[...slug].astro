@@ -3,6 +3,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Header from '../../../components/Header.astro';
 import Footer from '../../../components/Footer.astro';
 import StarRating from '../../../components/StarRating.astro';
+import DestinationContent from '../../../components/DestinationContent.astro';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -77,8 +78,10 @@ const whatsappUrl = `https://wa.me/5554996415665?text=${encodeURIComponent(whats
           </div>
 
           <!-- Conteúdo MDX -->
-          <div class="mb-8 prose prose-lg max-w-none dark:prose-invert">
-            <Content />
+          <div class="mb-8">
+            <DestinationContent>
+              <Content />
+            </DestinationContent>
           </div>
 
           <!-- Galeria de Imagens -->
