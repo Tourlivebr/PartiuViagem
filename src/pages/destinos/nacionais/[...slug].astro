@@ -58,12 +58,16 @@ const whatsappUrl = `https://wa.me/5554996415665?text=${encodeURIComponent(whats
     <div class="container mx-auto px-4 py-12">
       <div class="grid lg:grid-cols-3 gap-12">
         <div class="lg:col-span-2">
-          <!-- Avaliações e Preço -->
+          <!-- Data, avaliações e preço -->
           <div class="flex flex-wrap items-center justify-between mb-8 p-6 bg-gray-50 dark:bg-gray-800 rounded-xl">
             <div class="flex items-center space-x-4 mb-4 lg:mb-0">
               <div class="flex flex-col">
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-1"><strong>Data do Passeio:</strong></p>
+                <div class="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                  {destino.data.dateRange || (destino.data.tripDates && destino.data.tripDates[0]) || "Consulte"}
+                </div>
                 <p class="text-sm text-gray-600 dark:text-gray-400 mb-1"><strong>Avaliação dos Viajantes:</strong></p>
-                <div class="flex items-center">
+                <div class="flex items-center flex-wrap gap-y-1">
                   <StarRating rating={destino.data.rating || 5} />
                   <span class="text-gray-600 dark:text-gray-300 ml-2">({destino.data.reviewCount || 0} avaliações)</span>
                 </div>
