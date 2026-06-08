@@ -1,0 +1,23 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const { frontmatter } = Astro.props;
+const title = frontmatter?.title ? `${frontmatter.title} | Partiu Viagem` : 'Blog | Partiu Viagem';
+const description = frontmatter?.description || 'Conteudo do blog Partiu Viagem.';
+const image = frontmatter?.coverImage || '/images/mascote_pv.png';
+const keywords = Array.isArray(frontmatter?.tags) ? frontmatter.tags : [];
+---
+
+<BaseLayout title={title} description={description} image={image} keywords={keywords}>
+  <Header />
+
+  <main class="pt-28 pb-12">
+    <article class="container mx-auto px-4 prose prose-neutral max-w-3xl">
+      <slot />
+    </article>
+  </main>
+
+  <Footer />
+</BaseLayout>
