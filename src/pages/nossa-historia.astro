@@ -2,163 +2,211 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+
+const allImages = Array.from({ length: 10 }, (_, index) =>
+  `/images/quem-somos/quemsomos%20(${index + 1}).jpeg`
+);
+
+const heroImages = allImages.slice(0, 4);
+const galleryImages = allImages.filter((_, index) => index !== 5 && index !== 7);
+
+const timelineItems = [
+  {
+    year: '2017',
+    title: 'Graduação em Turismo',
+    description:
+      'Bacharelado pela Feevale, dando início à construção de uma carreira dedicada ao desenvolvimento do turismo.',
+  },
+  {
+    year: '2018',
+    title: 'Fundação da Partiu Viagem Turismo',
+    description:
+      'Agência criada com o propósito de democratizar o acesso às viagens e proporcionar experiências inesquecíveis.',
+  },
+  {
+    year: '2019',
+    title: 'Guia de Turismo - América do Sul',
+    description:
+      'Formação pelo SENAC, ampliando a atuação profissional e o conhecimento técnico sobre destinos e experiências.',
+  },
+  {
+    year: '2021',
+    title: 'MBA e Mestrado',
+    description:
+      'Conclusão do MBA em Gestão de Negócios em Turismo, pela UNIRITTER, e obtenção do título de Mestre em Turismo e Hospitalidade, pela UCS.',
+  },
+  {
+    year: '2021 - 2024',
+    title: 'Secretário Municipal de Turismo',
+    description:
+      'Atuação em Nova Petrópolis, contribuindo para o fortalecimento de um dos principais destinos turísticos da Serra Gaúcha.',
+  },
+  {
+    year: '2024 - Atual',
+    title: 'Diretor Adjunto de Planejamento e Competitividade',
+    description:
+      'Atuação na Secretaria de Turismo do Estado do Rio Grande do Sul, participando da formulação de políticas públicas e estratégias para o desenvolvimento do turismo gaúcho.',
+  },
+  {
+    year: '2026',
+    title: 'Ampliação da Partiu Viagem Receptivo',
+    description:
+      'Ampliação da atuação da marca para receber visitantes e apresentar, com autenticidade, as riquezas culturais, históricas e naturais da Serra Gaúcha e do Rio Grande do Sul.',
+  },
+  {
+    year: 'Atualidade',
+    title: 'Professor e Palestrante',
+    description:
+      'Compartilha conhecimentos, experiências e reflexões sobre turismo, gestão, hospitalidade e desenvolvimento de destinos, além de atuar como Professor de Turismo do RECIDADES Brasil.',
+  },
+];
 ---
 
-<BaseLayout title="Nossa História - Partiu Viagem" description="Conheça a história de Amanda e Vicente, o casal que já ajudou mais de 17 mil viajantes a viverem momentos inesquecíveis em Gramado com economia e inteligência.">
-  <!-- Header -->
+<BaseLayout
+  title="Nossa História | Partiu Viagem"
+  description="Conheça a trajetória da Partiu Viagem e de Rodrigo Santos, profissional que une formação, experiência e paixão pelo turismo para criar experiências autênticas."
+  image={heroImages[0]}
+  keywords={['Partiu Viagem', 'Rodrigo Santos', 'Turismo', 'Nossa História', 'Serra Gaúcha', 'Rio Grande do Sul']}
+>
   <Header />
-  <!-- Carrossel de Imagens Full Width -->
-  <section class="relative w-full h-screen overflow-hidden">
-    <div class="carousel-container relative w-full h-full">
-      <!-- Imagem 1 -->
-      <div class="carousel-slide absolute inset-0 opacity-100 transition-opacity duration-1000 ease-in-out">
-        <img 
-          src="/images/quem-somos/amanda-sena-e-vicente-adamo-1.jpg" 
-          alt="Amanda Sena e Vicente Adamo" 
-          class="w-full h-full object-cover"
-        />
-        <div class="absolute inset-0 bg-black bg-opacity-20"></div>
-      </div>
-      
-      <!-- Imagem 2 -->
-      <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-1000 ease-in-out">
-        <img 
-          src="/images/quem-somos/amanda-sena-e-vicente-adamo-2.jpg" 
-          alt="Amanda Sena e Vicente Adamo" 
-          class="w-full h-full object-cover"
-        />
-        <div class="absolute inset-0 bg-black bg-opacity-20"></div>
-      </div>
 
-       <!-- Imagem 3 -->
-      <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-1000 ease-in-out">
-        <img 
-          src="/images/quem-somos/amanda-sena-e-vicente-adamo-3.jpg" 
-          alt="Amanda Sena e Vicente Adamo" 
-          class="w-full h-full object-cover"
-        />
-        <div class="absolute inset-0 bg-black bg-opacity-20"></div>
-      </div>
+  <section class="relative min-h-[85vh] overflow-hidden">
+    <div class="carousel-container absolute inset-0">
+      {heroImages.map((image, index) => (
+        <div class={`carousel-slide absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === 0 ? 'opacity-100' : 'opacity-0'}`}>
+          <img
+            src={image}
+            alt="Partiu Viagem - Nossa história"
+            class="h-full w-full object-cover"
+          />
+          <div class="absolute inset-0 bg-slate-950/50"></div>
+        </div>
+      ))}
+    </div>
 
-      <!-- Overlay Content -->
-      <div class="absolute inset-0 flex items-center justify-center z-10">
-        <div class="text-center text-white px-4 max-w-4xl mx-auto">
-          <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight text-white bg-black bg-opacity-40 backdrop-blur-sm rounded px-4 py-2 inline-block" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.6);">
-            Nossa <span class="text-blue-300">História</span>
+    <div class="relative z-10 flex min-h-[85vh] items-center">
+      <div class="mx-auto max-w-6xl px-4 py-24 text-white">
+        <div class="max-w-4xl">
+          <span class="mb-6 inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium backdrop-blur-sm">
+            Quem Somos
+          </span>
+          <h1 class="mb-6 text-4xl font-bold leading-tight md:text-6xl lg:text-7xl">
+            Partiu Viagem:
+            <span class="block text-amber-300">experiências que conectam pessoas</span>
           </h1>
-          <div class="w-24 h-1 bg-blue-300 mx-auto mb-8"></div>
-          <p class="text-xl md:text-2xl lg:text-3xl font-light leading-relaxed text-white bg-black bg-opacity-40 backdrop-blur-sm rounded px-4 py-2 inline-block" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
-            Somos <strong class="text-blue-300">Amanda e Vicente</strong>, um casal que ama Gramado e que já ajudou mais de <strong class="text-blue-300">17 mil viajantes</strong> a viverem momentos inesquecíveis.
+          <p class="max-w-3xl text-lg leading-relaxed text-slate-100 md:text-2xl">
+            Mais do que vender viagens, construímos vivências autênticas, com atendimento próximo,
+            cuidado em cada detalhe e compromisso com um turismo responsável, acolhedor e cheio de significado.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 gap-3">
+      {heroImages.map((_, index) => (
+        <button
+          class={`carousel-indicator h-3 w-3 rounded-full bg-white transition-opacity duration-300 ${index === 0 ? 'opacity-100' : 'opacity-50'}`}
+          data-slide={index}
+          aria-label={`Ir para a imagem ${index + 1}`}
+        ></button>
+      ))}
+    </div>
+
+    <button class="carousel-prev absolute left-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white backdrop-blur-sm transition hover:bg-white/20">
+      <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+      </svg>
+    </button>
+    <button class="carousel-next absolute right-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/10 p-3 text-white backdrop-blur-sm transition hover:bg-white/20">
+      <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+      </svg>
+    </button>
+  </section>
+
+  <section class="bg-white py-20 dark:bg-gray-900">
+    <div class="mx-auto grid max-w-6xl gap-14 px-4 lg:grid-cols-[1.2fr_0.8fr]">
+      <div>
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white md:text-5xl">
+            Quem <span class="text-blue-600">Somos</span>
+          </h2>
+          <div class="mt-4 h-1 w-20 bg-blue-600"></div>
+        </div>
+
+        <div class="space-y-6 text-lg leading-relaxed text-gray-600 dark:text-gray-300">
+          <p>
+            A <strong class="text-gray-900 dark:text-white">Partiu Viagem</strong> nasceu do sonho de transformar
+            viagens em experiências capazes de conectar pessoas, criar memórias e valorizar os destinos por meio de
+            um turismo responsável, acolhedor e cheio de significado.
+          </p>
+          <p>
+            Por trás dessa trajetória está <strong class="text-gray-900 dark:text-white">Rodrigo Santos</strong>,
+            turismólogo, mestre, guia de turismo, gestor público, professor e palestrante, que construiu sua caminhada
+            unindo conhecimento técnico, experiência prática e paixão por mostrar o melhor de cada destino.
+          </p>
+          <p>
+            Mais do que vender viagens, acreditamos em proporcionar vivências autênticas, com cuidado em cada detalhe,
+            atendimento próximo e o compromisso de fazer com que cada passageiro se sinta parte da nossa história.
+          </p>
+          <p>
+            Ao longo dos anos, milhares de viajantes embarcaram conosco, fortalecendo uma marca que hoje atua tanto no
+            turismo emissivo quanto no receptivo, sempre guiada pela ética, profissionalismo e amor pelo turismo.
+          </p>
+        </div>
+
+        <div class="mt-10 rounded-3xl border border-blue-100 bg-gradient-to-r from-blue-50 to-indigo-50 p-8 dark:border-gray-700 dark:from-gray-800 dark:to-gray-800">
+          <h3 class="mb-4 text-2xl font-semibold text-gray-900 dark:text-white">
+            Partiu Viagem: mais do que viagens, experiências que conectam pessoas e transformam histórias.
+          </h3>
+          <p class="text-lg leading-relaxed text-gray-700 dark:text-gray-300">
+            Com profissionalismo, acolhimento e paixão pelo que fazemos, seguimos construindo novos caminhos,
+            inspirando descobertas e levando cada viajante a viver momentos únicos, porque acreditamos que viajar é
+            uma das formas mais bonitas de conhecer o mundo e também de transformar vidas.
           </p>
         </div>
       </div>
 
-      <!-- Indicadores do Carrossel -->
-      <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
-        <button class="carousel-indicator w-3 h-3 rounded-full bg-white opacity-100 transition-opacity duration-300" data-slide="0"></button>
-        <button class="carousel-indicator w-3 h-3 rounded-full bg-white opacity-50 transition-opacity duration-300" data-slide="1"></button>
-      </div>
-
-      <!-- Setas de Navegação -->
-      <button class="carousel-prev absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-blue-300 transition-colors duration-300 z-20">
-        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-        </svg>
-      </button>
-      <button class="carousel-next absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-blue-300 transition-colors duration-300 z-20">
-        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-        </svg>
-      </button>
-    </div>
-  </section>
-
-  <!-- Seção de Conteúdo Principal -->
-  <section class="py-20 bg-white dark:bg-gray-900">
-    <div class="max-w-6xl mx-auto px-4">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        <!-- Coluna de Texto -->
-        <div class="space-y-8">
-          <div>
-            <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              Quem <span class="text-blue-600">Somos</span>
-            </h2>
-            <div class="w-16 h-1 bg-blue-600 mb-8"></div>
+      <div class="space-y-6">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 p-6 text-white shadow-lg">
+            <div class="text-3xl font-bold">2018</div>
+            <div class="mt-2 text-sm text-blue-100">Fundação da Partiu Viagem Turismo</div>
           </div>
-
-          <div class="space-y-6 text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-            <p>
-              Somos <strong class="text-blue-600">Amanda e Vicente</strong>, apaixonados por Gramado. Desde nossa lua de mel em <strong class="text-blue-600">2016</strong>, descobrimos como viver a cidade com economia e inteligência, sem perder a magia.
-            </p>
-
-            <p>
-              Em <strong class="text-blue-600">2018</strong> começamos a compartilhar dicas nas redes sociais e, em <strong class="text-blue-600">2020</strong>, lançamos a <strong class="text-blue-600">Semana Economizando em Gramado</strong>, maior evento online sobre como planejar a viagem dos sonhos gastando menos.
-            </p>
-
-            <p>
-              De lá para cá, já ajudamos mais de <strong class="text-blue-600">17 mil viajantes</strong> a aproveitarem Gramado de forma única e inteligente. Hoje seguimos pioneiros em oferecer informação e curadoria oficial, entregando os melhores roteiros para você viver momentos inesquecíveis em Gramado com <strong class="text-blue-600">até 50% de economia</strong>.
-            </p>
-
-            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-700 rounded-2xl p-8 border-l-4 border-blue-600">
-              <p class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                Nosso Propósito
-              </p>
-              <p class="text-lg text-gray-700 dark:text-gray-300">
-                Entregar o melhor roteiro de Gramado para você viver momentos inesquecíveis com até <strong class="text-blue-600">50% de economia</strong>.
-              </p>
-            </div>
+          <div class="rounded-2xl bg-gradient-to-br from-indigo-600 to-indigo-700 p-6 text-white shadow-lg">
+            <div class="text-3xl font-bold">2026</div>
+            <div class="mt-2 text-sm text-indigo-100">Início da Partiu Viagem Receptivo</div>
+          </div>
+          <div class="rounded-2xl bg-gradient-to-br from-slate-700 to-slate-800 p-6 text-white shadow-lg">
+            <div class="text-xl font-semibold">Emissivo e receptivo</div>
+            <div class="mt-2 text-sm text-slate-200">Atuação completa para diferentes perfis de viajantes</div>
+          </div>
+          <div class="rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 p-6 text-white shadow-lg">
+            <div class="text-xl font-semibold">Turismo com propósito</div>
+            <div class="mt-2 text-sm text-amber-50">Experiências autênticas com cuidado em cada detalhe</div>
           </div>
         </div>
 
-        <!-- Coluna de Estatísticas -->
-        <div class="space-y-8">
-          <div class="grid grid-cols-2 gap-6">
-            <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 text-white text-center">
-              <div class="text-3xl md:text-4xl font-bold mb-2">17k+</div>
-              <div class="text-sm md:text-base opacity-90">Viajantes Ajudados</div>
-            </div>
-            <div class="bg-gradient-to-br from-blue-400 to-blue-500 rounded-2xl p-6 text-white text-center">
-              <div class="text-3xl md:text-4xl font-bold mb-2">50%</div>
-              <div class="text-sm md:text-base opacity-90">Economia Média</div>
-            </div>
-            <div class="bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl p-6 text-white text-center">
-              <div class="text-3xl md:text-4xl font-bold mb-2">2016</div>
-              <div class="text-sm md:text-base opacity-90">Início da Nossa Jornada</div>
-            </div>
-            <div class="bg-gradient-to-br from-slate-500 to-slate-600 rounded-2xl p-6 text-white text-center">
-              <div class="text-3xl md:text-4xl font-bold mb-2">Diferencial</div>
-              <div class="text-sm md:text-base opacity-90">Semana Economizando</div>
-            </div>
-          </div>
-
-          <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-8">
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-              Por que confiar em nós?
-            </h3>
+        <div class="overflow-hidden rounded-3xl bg-gray-50 shadow-lg dark:bg-gray-800">
+          <img
+            src={allImages[4]}
+            alt="Rodrigo Santos e equipe da Partiu Viagem"
+            class="h-80 w-full object-cover"
+          />
+          <div class="p-6">
+            <h3 class="mb-3 text-xl font-semibold text-gray-900 dark:text-white">Nossa essência</h3>
             <ul class="space-y-3 text-gray-600 dark:text-gray-300">
-              <li class="flex items-start">
-                <svg class="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                </svg>
-                Experiência prática desde 2016
+              <li class="flex items-start gap-3">
+                <span class="mt-1 h-2.5 w-2.5 rounded-full bg-blue-600"></span>
+                Atendimento próximo e acolhedor.
               </li>
-              <li class="flex items-start">
-                <svg class="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                </svg>
-                Curadoria oficial da cidade
+              <li class="flex items-start gap-3">
+                <span class="mt-1 h-2.5 w-2.5 rounded-full bg-blue-600"></span>
+                Planejamento com visão técnica e experiência prática.
               </li>
-              <li class="flex items-start">
-                <svg class="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                </svg>
-                Resultados comprovados
-              </li>
-              <li class="flex items-start">
-                <svg class="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                </svg>
-                Paixão genuína por Gramado
+              <li class="flex items-start gap-3">
+                <span class="mt-1 h-2.5 w-2.5 rounded-full bg-blue-600"></span>
+                Compromisso com ética, profissionalismo e desenvolvimento do turismo.
               </li>
             </ul>
           </div>
@@ -167,420 +215,127 @@ import Footer from '../components/Footer.astro';
     </div>
   </section>
 
-  <!-- Timeline Section -->
-  <section class="py-20 bg-gray-50 dark:bg-gray-900">
-    <div class="max-w-6xl mx-auto px-4">
-      <div class="text-center mb-16">
-        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-          Nossa <span class="text-blue-600">Jornada</span>
+  <section class="bg-gray-50 py-20 dark:bg-gray-950">
+    <div class="mx-auto max-w-6xl px-4">
+      <div class="mb-14 text-center">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white md:text-5xl">
+          Nossa <span class="text-blue-600">Trajetória</span>
         </h2>
-        <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-          Uma linha do tempo dos momentos mais importantes da nossa trajetória
+        <p class="mx-auto mt-4 max-w-3xl text-lg text-gray-600 dark:text-gray-300">
+          Uma caminhada construída com formação, atuação profissional e dedicação ao fortalecimento do turismo.
         </p>
       </div>
 
-      <!-- Timeline -->
       <div class="relative">
-        <!-- Linha Central -->
-        <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-blue-600 hidden md:block"></div>
+        <div class="absolute left-4 top-0 hidden h-full w-1 bg-blue-200 md:left-1/2 md:block md:-translate-x-1/2 dark:bg-blue-900/40"></div>
 
-        <!-- Timeline Items -->
-        <div class="space-y-12 md:space-y-16">
-          <!-- 2016 - Lua de Mel -->
-          <div class="relative flex flex-col md:flex-row items-center">
-            <div class="md:w-1/2 md:pr-8 text-center md:text-right">
-              <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
-                <div class="text-3xl font-bold text-blue-600 mb-2">2016</div>
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">O Começo de Tudo</h3>
-                <p class="text-gray-600 dark:text-gray-300">
-                  Nossa primeira viagem a Gramado na lua de mel. Descobrimos que era possível aproveitar a cidade de forma inteligente e econômica, sem perder a magia da experiência.
-                </p>
-              </div>
-            </div>
-            
-            <!-- Timeline Dot -->
-            <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-600 rounded-full border-4 border-white dark:border-gray-900"></div>
-            
-            <div class="md:w-1/2 md:pl-8"></div>
-          </div>
-
-          <!-- 2018 - Redes Sociais -->
-          <div class="relative flex flex-col md:flex-row items-center">
-            <div class="md:w-1/2 md:pr-8"></div>
-            
-            <!-- Timeline Dot -->
-            <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-600 rounded-full border-4 border-white dark:border-gray-900"></div>
-            
-            <div class="md:w-1/2 md:pl-8 text-center md:text-left">
-              <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
-                <div class="text-3xl font-bold text-blue-600 mb-2">2018</div>
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Compartilhando Conhecimento</h3>
-                <p class="text-gray-600 dark:text-gray-300">
-                  Decidimos compartilhar nosso aprendizado nas redes sociais, ajudando pessoas a montarem seus roteiros com praticidade e economia.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- 2020 - Semana Economizando -->
-          <div class="relative flex flex-col md:flex-row items-center">
-            <div class="md:w-1/2 md:pr-8 text-center md:text-right">
-              <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
-                <div class="text-3xl font-bold text-blue-600 mb-2">2020</div>
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Maior Evento Online</h3>
-                <p class="text-gray-600 dark:text-gray-300">
-                  Criamos a "Semana Economizando em Gramado", o maior evento online sobre como planejar a viagem dos sonhos para Gramado gastando menos.
-                </p>
-              </div>
-            </div>
-            
-            <!-- Timeline Dot -->
-            <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-600 rounded-full border-4 border-white dark:border-gray-900"></div>
-            
-            <div class="md:w-1/2 md:pl-8"></div>
-          </div>
-
-          <!-- Hoje - Pioneiros -->
-          <div class="relative flex flex-col md:flex-row items-center">
-            <div class="md:w-1/2 md:pr-8"></div>
-            
-            <!-- Timeline Dot -->
-            <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-600 rounded-full border-4 border-white dark:border-gray-900"></div>
-            
-            <div class="md:w-1/2 md:pl-8 text-center md:text-left">
-              <div class="bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-700 dark:to-gray-600 rounded-2xl p-6 shadow-lg border border-blue-200 dark:border-gray-600">
-                <div class="text-3xl font-bold text-blue-600 mb-2">Hoje</div>
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Pioneiros Digitais</h3>
-                <p class="text-gray-600 dark:text-gray-300 mb-4">
-                  Seguimos pioneiros em levar informação e curadoria oficial da cidade pela internet, com mais de 17 mil viajantes ajudados.
-                </p>
-                <div class="flex items-center justify-center md:justify-start space-x-4 text-sm text-gray-500 dark:text-gray-400">
-                  <div class="flex items-center">
-                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    17k+ viajantes
-                  </div>
-                  <div class="flex items-center">
-                    <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"></path>
-                    </svg>
-                    50% economia
-                  </div>
+        <div class="space-y-8">
+          {timelineItems.map((item, index) => (
+            <div class={`relative md:grid md:grid-cols-2 md:gap-10 ${index % 2 === 0 ? '' : ''}`}>
+              <div class={index % 2 === 0 ? 'md:pr-10 md:text-right' : 'md:col-start-2 md:pl-10'}>
+                <div class="rounded-3xl border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+                  <span class="mb-4 inline-flex rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700 dark:bg-blue-950 dark:text-blue-200">
+                    {item.year}
+                  </span>
+                  <h3 class="mb-3 text-2xl font-semibold text-gray-900 dark:text-white">{item.title}</h3>
+                  <p class="leading-relaxed text-gray-600 dark:text-gray-300">{item.description}</p>
                 </div>
               </div>
+
+              <div class="hidden md:block"></div>
+              <div class="absolute left-1/2 top-10 hidden h-5 w-5 -translate-x-1/2 rounded-full border-4 border-white bg-blue-600 md:block dark:border-gray-950"></div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FAQ Section -->
-  <section class="py-20 bg-white dark:bg-gray-800">
-    <div class="max-w-4xl mx-auto px-4">
-      <div class="text-center mb-16">
-        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-          Perguntas <span class="text-blue-600">Frequentes</span>
-        </h2>
-        <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-          Tire suas dúvidas sobre nossa história e nosso trabalho
-        </p>
+  <section class="bg-white py-20 dark:bg-gray-900">
+    <div class="mx-auto max-w-6xl px-4">
+      <div class="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white md:text-5xl">
+            Galeria de <span class="text-blue-600">imagens</span>
+          </h2>
+          <p class="mt-4 max-w-2xl text-lg text-gray-600 dark:text-gray-300">
+            Conheça alguns dos momentos que fazem parte da história da Partiu Viagem. Registros de eventos, experiências e conquistas que refletem nosso compromisso com a excelência, a inovação e o turismo de qualidade.
+          </p>
+        </div>
       </div>
 
-      <div class="space-y-4">
-        <!-- FAQ Item 1 -->
-        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl overflow-hidden">
-          <button 
-            class="faq-button w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
-            onclick="toggleFAQ('faq1')"
-          >
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-              Quem são Amanda e Vicente?
-            </h3>
-            <svg id="faq1-icon" class="w-5 h-5 text-gray-500 dark:text-gray-400 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </button>
-          <div id="faq1" class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-6">
-            <p class="text-gray-600 dark:text-gray-300 pb-4">
-              Somos um casal apaixonado por Gramado. Desde 2016 vivemos experiências únicas nessa cidade e transformamos essa paixão em missão: ajudar outros viajantes a descobrirem o melhor de Gramado de forma inteligente e econômica.
-            </p>
-          </div>
-        </div>
-
-        <!-- FAQ Item 2 -->
-        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl overflow-hidden">
-          <button 
-            class="faq-button w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
-            onclick="toggleFAQ('faq2')"
-          >
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-              Como começou a história de vocês com Gramado?
-            </h3>
-            <svg id="faq2-icon" class="w-5 h-5 text-gray-500 dark:text-gray-400 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </button>
-          <div id="faq2" class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-6">
-            <p class="text-gray-600 dark:text-gray-300 pb-4">
-              Tudo começou em nossa lua de mel, em 2016. Descobrimos que era possível aproveitar a cidade de um jeito diferente: curtindo cada momento com economia e praticidade, sem abrir mão da magia da experiência.
-            </p>
-          </div>
-        </div>
-
-        <!-- FAQ Item 3 -->
-        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl overflow-hidden">
-          <button 
-            class="faq-button w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
-            onclick="toggleFAQ('faq3')"
-          >
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-              Quando decidiram compartilhar essas dicas com outras pessoas?
-            </h3>
-            <svg id="faq3-icon" class="w-5 h-5 text-gray-500 dark:text-gray-400 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </button>
-          <div id="faq3" class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-6">
-            <p class="text-gray-600 dark:text-gray-300 pb-4">
-              Em 2018, passamos a dividir nossas experiências nas redes sociais. Desde então, milhares de viajantes passaram a confiar em nossas dicas para montar roteiros inesquecíveis em Gramado e região.
-            </p>
-          </div>
-        </div>
-
-        <!-- FAQ Item 4 -->
-        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl overflow-hidden">
-          <button 
-            class="faq-button w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
-            onclick="toggleFAQ('faq4')"
-          >
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-              O que é a "Semana Economizando em Gramado"?
-            </h3>
-            <svg id="faq4-icon" class="w-5 h-5 text-gray-500 dark:text-gray-400 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </button>
-          <div id="faq4" class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-6">
-            <p class="text-gray-600 dark:text-gray-300 pb-4">
-              É o maior evento online dedicado a ajudar turistas a planejar sua viagem dos sonhos para Gramado gastando menos. Criamos esse projeto em 2020, e desde então já impactamos mais de 17 mil viajantes.
-            </p>
-          </div>
-        </div>
-
-        <!-- FAQ Item 5 -->
-        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl overflow-hidden">
-          <button 
-            class="faq-button w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
-            onclick="toggleFAQ('faq5')"
-          >
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-              O que significa "curadoria oficial da cidade"?
-            </h3>
-            <svg id="faq5-icon" class="w-5 h-5 text-gray-500 dark:text-gray-400 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </button>
-          <div id="faq5" class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-6">
-            <p class="text-gray-600 dark:text-gray-300 pb-4">
-              Significa que selecionamos, organizamos e validamos as melhores informações e experiências de Gramado. Não entregamos apenas dicas soltas: nossa curadoria é confiável, atualizada e pensada para que cada viajante tenha a melhor experiência possível.
-            </p>
-          </div>
-        </div>
-
-        <!-- FAQ Item 6 -->
-        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl overflow-hidden">
-          <button 
-            class="faq-button w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
-            onclick="toggleFAQ('faq6')"
-          >
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-              Qual é o propósito do projeto?
-            </h3>
-            <svg id="faq6-icon" class="w-5 h-5 text-gray-500 dark:text-gray-400 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </button>
-          <div id="faq6" class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-6">
-            <p class="text-gray-600 dark:text-gray-300 pb-4">
-              Nosso propósito é simples e claro: entregar os melhores roteiros e informações para que você viva momentos inesquecíveis em Gramado, economizando até 50% na sua viagem.
-            </p>
-          </div>
-        </div>
-
-        <!-- FAQ Item 7 -->
-        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl overflow-hidden">
-          <button 
-            class="faq-button w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
-            onclick="toggleFAQ('faq7')"
-          >
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-              Por que confiar em vocês?
-            </h3>
-            <svg id="faq7-icon" class="w-5 h-5 text-gray-500 dark:text-gray-400 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </button>
-          <div id="faq7" class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-6">
-            <p class="text-gray-600 dark:text-gray-300 pb-4">
-              Porque já ajudamos mais de 17 mil viajantes a realizarem sua viagem dos sonhos em Gramado. Nossa experiência prática, nossa dedicação e nossa paixão pela cidade garantem que cada dica compartilhada seja útil, confiável e transformadora.
-            </p>
-          </div>
-        </div>
+      <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {galleryImages.map((image, index) => (
+          <figure class="overflow-hidden rounded-3xl bg-gray-100 shadow-sm dark:bg-gray-800">
+            <img
+              src={image}
+              alt={`em ${index + 1}`}
+              class="h-72 w-full object-cover transition duration-500 hover:scale-105"
+            />
+          </figure>
+        ))}
       </div>
     </div>
   </section>
 
-  <!-- Call to Action - Parcerias -->
-  <section class="relative py-20 overflow-hidden">
-    <!-- Background com gradiente e overlay -->
-    <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900"></div>
-    <div class="absolute inset-0 bg-black bg-opacity-30"></div>
-    
-    <!-- Imagem do casal como background fixo -->
-    <div class="absolute inset-0 bg-fixed bg-center bg-cover bg-no-repeat opacity-20" 
-         style="background-image: url('/images/quem-somos/amanda-sena-e-vicente-adamo-1.jpg');">
-    </div>
-
-    <!-- Elementos decorativos -->
-    <div class="absolute top-10 left-10 w-32 h-32 bg-blue-500 rounded-full opacity-10 blur-3xl"></div>
-    <div class="absolute bottom-10 right-10 w-40 h-40 bg-indigo-500 rounded-full opacity-10 blur-3xl"></div>
-
-    <div class="relative z-10 max-w-7xl mx-auto px-4">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        
-        <!-- Coluna da Imagem do Casal -->
-        <div class="relative order-2 lg:order-1">
-          <div class="relative">
-            <!-- Moldura decorativa -->
-            <div class="absolute -inset-4 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl opacity-20 blur-lg"></div>
-            
-            <!-- Imagem principal -->
-            <div class="relative bg-white p-2 rounded-2xl shadow-2xl transform hover:scale-105 transition-transform duration-500">
-              <img 
-                src="/images/quem-somos/amanda-sena-e-vicente-adamo-prc.jpg" 
-                alt="Amanda e Vicente - Fundadores da Partiu Viagem" 
-                class="w-full h-80 lg:h-96 object-cover rounded-xl"
-              />
-              
-              <!-- Badge de credibilidade -->
-              <div class="absolute -bottom-4 -right-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-2 rounded-full shadow-lg">
-                <div class="flex items-center space-x-2">
-                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                  </svg>
-                  <span class="text-sm font-semibold">17k+ Confiaram</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Elementos decorativos ao redor da imagem -->
-            <div class="absolute -top-6 -left-6 w-12 h-12 bg-yellow-400 rounded-full opacity-80 animate-pulse"></div>
-            <div class="absolute -bottom-8 left-8 w-8 h-8 bg-blue-400 rounded-full opacity-60"></div>
-            <div class="absolute top-4 -right-8 w-6 h-6 bg-indigo-400 rounded-full opacity-70"></div>
-          </div>
+  <section class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900 py-20 text-white">
+    <div class="absolute inset-0 opacity-20" style={`background-image: url('${allImages[1]}'); background-size: cover; background-position: center;`}></div>
+    <div class="relative mx-auto max-w-6xl px-4">
+      <div class="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+        <div class="overflow-hidden rounded-3xl border border-white/10 bg-white/10 p-3 backdrop-blur-sm">
+          <img
+            src={allImages[3]}
+            alt="Partiu Viagem em atuação"
+            class="h-80 w-full rounded-2xl object-cover lg:h-[420px]"
+          />
         </div>
 
-        <!-- Coluna do Conteúdo -->
-        <div class="text-center lg:text-left order-1 lg:order-2 text-white">
-          <div class="mb-8">
-            <!-- Badge superior -->
-            <div class="inline-flex items-center px-4 py-2 bg-blue-500 bg-opacity-20 rounded-full border border-blue-400 border-opacity-30 mb-6">
-              <svg class="w-5 h-5 text-blue-300 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"></path>
-              </svg>
-              <span class="text-blue-200 text-sm font-medium">Curadoria Oficial de Gramado</span>
-            </div>
+        <div>
+          <span class="mb-5 inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium">
+            Fale com a Partiu Viagem
+          </span>
+          <h2 class="text-4xl font-bold leading-tight md:text-5xl">
+            Vamos construir sua próxima experiência juntos?
+          </h2>
+          <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-200">
+            Seja para viagens, receptivo, experiências culturais ou projetos ligados ao turismo, a Partiu Viagem
+            segue de portas abertas para atender com proximidade, planejamento e compromisso com a excelência.
+          </p>
 
-            <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              Vamos Trabalhar <br>
-              <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">Juntos?</span>
-            </h2>
-            
-            <p class="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto lg:mx-0 mb-8 leading-relaxed">
-              <strong class="text-white">Amanda e Vicente</strong> estão prontos para conectar seu negócio com milhares de viajantes apaixonados por Gramado.
-            </p>
-          </div>
-
-          <!-- Cards de benefícios em linha -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-            <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4 border border-white border-opacity-20 hover:bg-opacity-20 transition-all duration-300">
-              <div class="text-2xl mb-2">🤝</div>
-              <h3 class="font-semibold mb-1 text-sm">Parcerias Estratégicas</h3>
-              <p class="text-xs text-slate-300">Conexão direta com viajantes</p>
-            </div>
-            <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4 border border-white border-opacity-20 hover:bg-opacity-20 transition-all duration-300">
-              <div class="text-2xl mb-2">📈</div>
-              <h3 class="font-semibold mb-1 text-sm">Resultados Comprovados</h3>
-              <p class="text-xs text-slate-300">17k+ pessoas impactadas</p>
-            </div>
-            <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4 border border-white border-opacity-20 hover:bg-opacity-20 transition-all duration-300">
-              <div class="text-2xl mb-2">⭐</div>
-              <h3 class="font-semibold mb-1 text-sm">Curadoria Premium</h3>
-              <p class="text-xs text-slate-300">Seleção criteriosa</p>
-            </div>
-          </div>
-
-          <!-- Call to Action -->
-          <div class="space-y-6">
+          <div class="mt-8 flex flex-wrap gap-4">
             <a
-              href="https://wa.me/5554996415665?text=Olá! Gostaria de saber mais sobre parcerias com a Partiu Viagem. Tenho interesse em trabalhar juntos!"
+              href="https://wa.me/5554996415665?text=Olá! Gostaria de saber mais sobre a Partiu Viagem e seus serviços."
               target="_blank"
               rel="noopener noreferrer"
-              class="group inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-gradient-to-r from-green-500 to-emerald-600 rounded-full hover:from-green-600 hover:to-emerald-700 transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-green-500/25"
+              class="inline-flex items-center justify-center rounded-full bg-green-500 px-8 py-4 text-lg font-semibold text-white transition hover:bg-green-600"
             >
-              <svg class="w-6 h-6 mr-3 group-hover:animate-bounce" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.479 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
-              </svg>
-              Falar sobre Parcerias
-              <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-              </svg>
+              Falar no WhatsApp
             </a>
-
-            <!-- Informações de credibilidade -->
-            <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-2 sm:space-y-0 sm:space-x-6 text-sm text-slate-400">
-              <div class="flex items-center">
-                <svg class="w-4 h-4 text-green-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                </svg>
-                Resposta em até 2h
-              </div>
-              <div class="flex items-center">
-                <svg class="w-4 h-4 text-blue-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                Atendimento personalizado
-              </div>
-              <div class="flex items-center">
-                <svg class="w-4 h-4 text-yellow-400 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                </svg>
-                Desde 2016
-              </div>
-            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
+
+  <Footer />
 </BaseLayout>
 
 <script is:inline>
-  // Carrossel de Imagens
   let currentSlide = 0;
-  const slides = document.querySelectorAll('.carousel-slide');
-  const indicators = document.querySelectorAll('.carousel-indicator');
+  const slides = Array.from(document.querySelectorAll('.carousel-slide'));
+  const indicators = Array.from(document.querySelectorAll('.carousel-indicator'));
+  const nextButton = document.querySelector('.carousel-next');
+  const prevButton = document.querySelector('.carousel-prev');
   const totalSlides = slides.length;
+  let autoplayId = null;
 
   function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.style.opacity = i === index ? '1' : '0';
+    slides.forEach((slide, slideIndex) => {
+      slide.style.opacity = slideIndex === index ? '1' : '0';
     });
-    
-    indicators.forEach((indicator, i) => {
-      indicator.style.opacity = i === index ? '1' : '0.5';
+
+    indicators.forEach((indicator, indicatorIndex) => {
+      indicator.style.opacity = indicatorIndex === index ? '1' : '0.5';
     });
   }
 
@@ -594,77 +349,30 @@ import Footer from '../components/Footer.astro';
     showSlide(currentSlide);
   }
 
-  // Event listeners para navegação
-  document.querySelector('.carousel-next').addEventListener('click', nextSlide);
-  document.querySelector('.carousel-prev').addEventListener('click', prevSlide);
+  function restartAutoplay() {
+    if (autoplayId) clearInterval(autoplayId);
+    autoplayId = setInterval(nextSlide, 5000);
+  }
 
-  // Event listeners para indicadores
-  indicators.forEach((indicator, index) => {
-    indicator.addEventListener('click', () => {
-      currentSlide = index;
-      showSlide(currentSlide);
+  if (nextButton && prevButton && totalSlides > 0) {
+    nextButton.addEventListener('click', () => {
+      nextSlide();
+      restartAutoplay();
     });
-  });
 
-  // Auto-play do carrossel
-  setInterval(nextSlide, 5000);
+    prevButton.addEventListener('click', () => {
+      prevSlide();
+      restartAutoplay();
+    });
 
-  // FAQ functionality
-  function toggleFAQ(faqId) {
-    const content = document.getElementById(faqId);
-    const icon = document.getElementById(faqId + '-icon');
-    
-    if (content.style.maxHeight === '0px' || content.style.maxHeight === '') {
-      // Fechar todos os outros FAQs
-      document.querySelectorAll('.faq-content').forEach(item => {
-        if (item.id !== faqId) {
-          item.style.maxHeight = '0px';
-        }
+    indicators.forEach((indicator, index) => {
+      indicator.addEventListener('click', () => {
+        currentSlide = index;
+        showSlide(currentSlide);
+        restartAutoplay();
       });
-      
-      // Resetar todos os ícones
-      document.querySelectorAll('[id$="-icon"]').forEach(iconEl => {
-        if (iconEl.id !== faqId + '-icon') {
-          iconEl.classList.remove('rotate-180');
-        }
-      });
-      
-      // Abrir o FAQ clicado
-      content.style.maxHeight = content.scrollHeight + 'px';
-      icon.classList.add('rotate-180');
-    } else {
-      // Fechar o FAQ clicado
-      content.style.maxHeight = '0px';
-      icon.classList.remove('rotate-180');
-    }
+    });
+
+    restartAutoplay();
   }
 </script>
-
-<!-- Footer -->
-<Footer />
-
-<style>
-  /* Animações personalizadas */
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .timeline-item {
-    animation: fadeInUp 0.6s ease-out;
-  }
-
-  /* Responsividade para timeline mobile */
-  @media (max-width: 768px) {
-    .timeline-item {
-      text-align: center;
-    }
-  }
-</style>
-</BaseLayout>
