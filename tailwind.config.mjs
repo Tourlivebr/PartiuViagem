@@ -55,9 +55,9 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Playfair Display', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-        serif: ['Playfair Display', 'Georgia', 'serif'],
-        display: ['Playfair Display', 'system-ui', 'sans-serif'],
+        sans: ['Arial', 'Helvetica', 'sans-serif'],
+        serif: ['Arial', 'Helvetica', 'sans-serif'],
+        display: ['Arial', 'Helvetica', 'sans-serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
