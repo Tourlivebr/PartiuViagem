@@ -68,12 +68,16 @@ const actionLinks = [
   </main>
 </BaseLayout>
 
+<script is:inline>
+  document.body.classList.add('hide-whatsapp-on-link');
+</script>
+
 <style is:global>
   .link-page {
     margin: 0 !important;
   }
 
-  .link-page .whatsapp-button {
+  .hide-whatsapp-on-link .whatsapp-button {
     display: none !important;
   }
 
