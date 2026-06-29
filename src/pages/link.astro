@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const actionLinks = [
+  {
+    title: 'WhatsApp',
+    href: 'https://wa.me/5554996415665?text=Olá! Gostaria de falar com a Partiu Viagem.',
+    style: 'top: 29.4%; left: 3.8%; width: 40.8%; height: 8.5%;',
+  },
+  {
+    title: 'Site',
+    href: 'https://www.partiuviagem.tur.br/',
+    style: 'top: 40.6%; left: 3.8%; width: 40.8%; height: 8.5%;',
+  },
+  {
+    title: 'Facebook',
+    href: 'https://www.facebook.com/PartiuViagemTurismo',
+    style: 'top: 51.9%; left: 3.8%; width: 40.8%; height: 8.5%;',
+  },
+  {
+    title: 'Instagram',
+    href: 'https://www.instagram.com/partiuviagemturismo',
+    style: 'top: 63.2%; left: 3.8%; width: 40.8%; height: 8.5%;',
+  },
+];
+---
+
+<BaseLayout
+  title="Link | Partiu Viagem"
+  description="Acesse rapidamente os principais canais da Partiu Viagem: WhatsApp, site, Facebook, Instagram e atendimento personalizado."
+  image="/images/logopartiuviagem.png"
+  keywords={['Partiu Viagem', 'Link', 'WhatsApp', 'Instagram', 'Facebook', 'Turismo']}
+>
+  <main class="link-page block overflow-x-hidden bg-transparent p-0">
+    <section class="relative w-full self-start">
+      <img
+        src="/images/card_pv.jpg"
+        alt="Card Partiu Viagem com links principais"
+        class="block h-auto w-full"
+      />
+
+      {actionLinks.map((item) => (
+        <a
+          href={item.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={item.title}
+          title={item.title}
+          class="link-hotspot absolute block rounded-[999px]"
+          style={item.style}
+        >
+          <span class="sr-only">{item.title}</span>
+        </a>
+      ))}
+
+      <a
+        href="https://www.partiuviagem.tur.br/"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Partiu Viagem"
+        title="Partiu Viagem"
+        class="link-hotspot absolute block rounded-[32px]"
+        style="top: 1.8%; left: 2.2%; width: 34%; height: 21%;"
+      >
+        <span class="sr-only">Partiu Viagem</span>
+      </a>
+    </section>
+  </main>
+</BaseLayout>
+
+<style is:global>
+  .link-page {
+    margin: 0 !important;
+  }
+
+  .link-page .whatsapp-button {
+    display: none !important;
+  }
+
+  .link-page .link-hotspot {
+    background: transparent;
+    outline: none;
+    transition: box-shadow 0.2s ease, background-color 0.2s ease;
+  }
+
+  .link-page .link-hotspot:hover,
+  .link-page .link-hotspot:focus-visible {
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.95);
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+</style>
